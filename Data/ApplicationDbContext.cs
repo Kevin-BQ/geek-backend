@@ -1,0 +1,32 @@
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using Models.Entidades;
+
+namespace Data
+{
+    public class ApplicationDbContext : IdentityDbContext<UserAplication, RoleAplication, int, IdentityUserClaim<int>
+                                                        , RoleUserAplication, IdentityUserLogin<int>, IdentityRoleClaim<int>
+                                                        , IdentityUserToken<int>>
+    {
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
+        public DbSet<UserAplication> UserAplication { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
+    }
+}

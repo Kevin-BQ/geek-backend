@@ -10,6 +10,6 @@ namespace Data.Interfaces.IRepositorio
     {
         // Interfaces de los modelos
 
-        Task Guardar();
+        Task Save();
     }
 }

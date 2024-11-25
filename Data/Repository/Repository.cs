@@ -21,13 +21,13 @@ namespace Data.Repositorio
             _dbSet = _context.Set<T>();
         }
 
-        public async Task Agregar(T entidad)
+        public async Task Add(T entidad)
         {
             await _dbSet.AddAsync(entidad);
         }
 
 
-        public async Task<T> ObtenerPrimero(Expression<Func<T, bool>> filtro = null, string incluirPropiedades = null)
+        public async Task<T> GetFirst(Expression<Func<T, bool>> filtro = null, string incluirPropiedades = null)
         {
             IQueryable<T> query = _dbSet;
 
@@ -46,7 +46,7 @@ namespace Data.Repositorio
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>> ObtenerTodos(Expression<Func<T, bool>> filtro = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null)
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filtro = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null)
         {
             IQueryable<T> query = _dbSet;
 
@@ -69,7 +69,7 @@ namespace Data.Repositorio
             return await query.ToListAsync();
         }
 
-        public void Remover(T entidad)
+        public void Remove(T entidad)
         {
             _dbSet.Remove(entidad);
         }

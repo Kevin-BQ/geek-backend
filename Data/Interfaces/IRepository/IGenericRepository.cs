@@ -9,19 +9,19 @@ namespace Data.Interfaces.IRepositorio
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<IEnumerable<T>> ObtenerTodos(
+        Task<IEnumerable<T>> GetAll(
             Expression<Func<T, bool>> filtro = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string incluirPropiedades = null // Include
             );
 
-        Task<T> ObtenerPrimero(
+        Task<T> GetFirst(
             Expression<Func<T, bool>> filtro = null,
             string incluirPropiedades = null // Include
             );
 
-        Task Agregar(T entidad);
-        void Remover(T entidad); 
+        Task Add(T entidad);
+        void Remove(T entidad); 
 
     }
 }

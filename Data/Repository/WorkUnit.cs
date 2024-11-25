@@ -25,7 +25,7 @@ namespace Data.Repositorio
             _context.Dispose();
         }
 
-        public async Task Guardar()
+        public async Task Save()
         {
             await _context.SaveChangesAsync();
         }

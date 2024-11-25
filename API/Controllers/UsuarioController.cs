@@ -49,7 +49,7 @@ namespace API.Controllers
         }*/
         [Authorize(Policy ="AdminRol")]
         [HttpPost("registro")]
-        public async Task<ActionResult<UsuarioDto>> Registro(RegistroDto registroDto)
+        public async Task<ActionResult<UsuarioDto>> Register(RegistroDto registroDto)
         {
             if (await UsuarioExiste(registroDto.UserName)) return BadRequest("UserName ya Registrado");
 
@@ -79,7 +79,7 @@ namespace API.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<UsuarioDto>> Login(LoginDto loginDto)
         {
-            var usuario = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
+            var usuario = await _userManager.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email);
             if (usuario == null) return Unauthorized("Usuario no Valido");
 
             var resultado = await _userManager.CheckPasswordAsync(usuario, loginDto.Password);

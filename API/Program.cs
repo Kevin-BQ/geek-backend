@@ -1,4 +1,4 @@
-using API.Extensiones;
+using API.Extensions;
 using API.Middleware;
 using Data.Inicializador;
 

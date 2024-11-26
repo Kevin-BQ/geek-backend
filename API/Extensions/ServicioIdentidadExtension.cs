@@ -9,7 +9,7 @@ using System.Text;
 using Models.Entidades;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Extensiones
+namespace API.Extensions
 {
     public static class ServicioIdentidadExtension
     {

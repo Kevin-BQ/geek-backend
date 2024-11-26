@@ -1,4 +1,6 @@
 ﻿using Data.Interfaces.IRepositorio;
+using Data.Interfaces.IRepository;
+using Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,15 @@ namespace Data.Repositorio
     public class WorkUnit : IWorkUnit
     {
         private readonly ApplicationDbContext _context;
-
         // Interfaces de Repositorios 
+        public IBrandRepository Brand {  get; private set; }
 
 
         public WorkUnit(ApplicationDbContext context)
         {
             _context = context;
             // 
+            Brand = new BrandRepository(context);
         }
 
         public void Dispose()

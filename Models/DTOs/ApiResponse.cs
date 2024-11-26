@@ -10,8 +10,8 @@ namespace Models.DTOs
     public class ApiResponse
     {
         public HttpStatusCode? statusCode { get; set; }
-        public bool? IsExitoso { get; set; }
-        public string? Mensaje {  get; set; }
-        public object? Resultado { get; set; }
+        public bool? IsSuccessful { get; set; }
+        public string? Message {  get; set; }
+        public object? Result { get; set; }
     }
 }

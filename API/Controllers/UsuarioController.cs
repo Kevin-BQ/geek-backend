@@ -98,8 +98,8 @@ namespace API.Controllers
         public IActionResult GetRoles()
         {
             var roles = _roleManager.Roles.Select(r => new { NombreRol = r.Name}).ToList();
-            _apiResponse.Resultado = roles;
-            _apiResponse.IsExitoso = true;
+            _apiResponse.Result = roles;
+            _apiResponse.IsSuccessful = true;
             _apiResponse.statusCode = HttpStatusCode.OK;
             return Ok(_apiResponse);
         }

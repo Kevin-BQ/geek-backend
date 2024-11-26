@@ -8,6 +8,8 @@ using API.Errores;
 using Data.Interfaces.IRepositorio;
 using Data.Repositorio;
 using Utils;
+using BLL.Services.Interfaces;
+using BLL.Services;
 
 namespace API.Extensiones
 {
@@ -69,6 +71,9 @@ namespace API.Extensiones
 
             services.AddScoped<IWorkUnit, WorkUnit>();
             services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddScoped<IBrandService , BrandService>();
+
 
             return services;
         }

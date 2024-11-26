@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Models.Entidades;
+using Models.Entities;
 
 namespace Data
 {
@@ -22,6 +23,7 @@ namespace Data
 
         public DbSet<UserAplication> UserAplication { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

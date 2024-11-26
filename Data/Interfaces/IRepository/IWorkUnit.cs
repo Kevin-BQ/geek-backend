@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Interfaces.IRepository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Data.Interfaces.IRepositorio
     public interface IWorkUnit: IDisposable
     {
         // Interfaces de los modelos
+        IBrandRepository Brand { get; }
 
         Task Save();
     }

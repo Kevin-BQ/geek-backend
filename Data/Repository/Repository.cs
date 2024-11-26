@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repositorio
+namespace Data.Repository
 {
     public class Repository<T> : IGenericRepository<T> where T : class
     {

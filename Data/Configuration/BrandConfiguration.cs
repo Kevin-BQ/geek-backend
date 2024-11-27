@@ -16,7 +16,7 @@ namespace Data.Configuration
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.NameBrand).IsRequired().HasMaxLength(50);
             builder.Property(x => x.ImageUrl).IsRequired();
-            builder.Property(x => x.Estado).IsRequired();
+            builder.Property(x => x.Status).IsRequired();
         }
     }
 }

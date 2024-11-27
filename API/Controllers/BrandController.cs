@@ -73,7 +73,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -81,6 +81,25 @@ namespace API.Controllers
                 await _brandService.DeleteBrand(id);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.NoContent;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
+
+        [HttpGet("GetAssets")]
+        public async Task<IActionResult> GetAssests()
+        {
+            try
+            {
+                _response.Result = await _brandService.GetBrandsAssests();
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.OK;
             }
             catch (Exception ex)
             {

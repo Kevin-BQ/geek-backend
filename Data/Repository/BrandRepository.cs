@@ -26,7 +26,7 @@ namespace Data.Repository
             {
                 brandDb.NameBrand = brand.NameBrand;
                 brandDb.ImageUrl = brand.ImageUrl;
-                brandDb.Estado = brand.Estado;
+                brandDb.Status = brand.Status;
 
                 _context.SaveChanges();
             }

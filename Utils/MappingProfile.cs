@@ -14,7 +14,12 @@ namespace Utils
         public MappingProfile() 
         {
             CreateMap<Brand, BrandDto>()
-                     .ForMember(d => d.Estado, m => m.MapFrom(o => o.Estado == true ? 1: 0));
+                     .ForMember(d => d.Status, m => m.MapFrom(o => o.Status == true ? 1 : 0))
+                     .ForMember(d => d.ImageUrl, m => m.Ignore());
+
+            CreateMap<BrandDto, Brand>()
+                .ForMember(d => d.ImageUrl, m => m.Ignore()); 
+                
         }
     }
 }

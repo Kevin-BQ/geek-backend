@@ -18,6 +18,6 @@ namespace Models.Entities
 
         public string ImageUrl { get; set; }
 
-        public bool Estado { get; set; }
+        public bool Status { get; set; }
     }
 }

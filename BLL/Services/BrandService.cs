@@ -18,20 +18,21 @@ namespace BLL.Services
     {
         private readonly IWorkUnit _workUnit;
         private readonly IMapper _mapper;
-        private readonly Cloudinary _cloudinary;
+        private readonly IUploadImage _uploadImage;
 
-        public BrandService(IWorkUnit workUnit, IMapper mapper, Cloudinary cloudinary)
+        public BrandService(IWorkUnit workUnit, IMapper mapper, IUploadImage uploadImage)
         {
             _workUnit = workUnit;
             _mapper = mapper;
-            _cloudinary = cloudinary;
+            _uploadImage = uploadImage;
         }
 
         public async Task<BrandDto> AddBrand(BrandDto brandDto)
         {
             try
             {
-                string imageUrl = await UploadImageAsync(brandDto.ImageUrl);
+                string file = "brands";
+                string imageUrl = await _uploadImage.UploadImageAsync(brandDto.ImageUrl, file);
 
                 Brand brand = new Brand
                 {
@@ -70,7 +71,8 @@ namespace BLL.Services
 
                 if (brandDto.ImageUrl != null)
                 {
-                    string newImageUrl = await UploadImageAsync(brandDto.ImageUrl);
+                    string file = "brands";
+                    string newImageUrl = await _uploadImage.UploadImageAsync(brandDto.ImageUrl, file);
                     brandDb.ImageUrl = newImageUrl;
                 }
 
@@ -145,38 +147,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task<string> UploadImageAsync(IFormFile formFile)
-        {
-            // Verifica si el file esta vacio
-            if (formFile == null)
-            {
-                return null;
-            }
 
-            // Abre el archivo para leerlo como un flujo de datos
-            await using var stream = formFile.OpenReadStream();
-
-            // Clase de Cloudinary
-            var uploadParms = new ImageUploadParams
-            {
-                // File el cual contiene el nombre del archivo y su flujo de datos
-                File = new FileDescription(formFile.FileName, stream),
-                // Nombre de la carpeta donde se alamcenara
-                Folder = "brands"
-            };
-
-            // Se sube la imagen a cloudinary con los pareametros configurados
-            var uploadResult = await _cloudinary.UploadAsync(uploadParms);
-
-            // Verifica la respuesta si es exita
-            if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                throw new Exception("Error al Subir la Imagen");
-            }
-            
-            // Retorna la url en un string
-            return uploadResult.SecureUrl.ToString();
-        }
 
     }
 }

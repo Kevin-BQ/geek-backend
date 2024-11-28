@@ -72,6 +72,7 @@ namespace API.Extensiones
             services.AddScoped<IWorkUnit, WorkUnit>();
             services.AddAutoMapper(typeof(MappingProfile));
 
+            services.AddScoped<IUploadImage, UploadImage>();
             services.AddScoped<IBrandService , BrandService>();
 
 

@@ -15,8 +15,6 @@ namespace BLL.Services.Interfaces
         Task<BrandDto> AddBrand(BrandDto brandDto);
         Task UpdateBrand(BrandDto brandDto);
         Task DeleteBrand(int id);
-        Task<string> UploadImageAsync(IFormFile formFile);
-
         Task<IEnumerable<Brand>> GetBrandsAssests();
 
 

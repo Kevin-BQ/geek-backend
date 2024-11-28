@@ -1,4 +1,4 @@
-﻿using API.Errores;
+﻿using API.Errors;
 using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

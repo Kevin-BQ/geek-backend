@@ -4,14 +4,14 @@ using Data;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using API.Errores;
+using API.Errors;
 using Data.Interfaces.IRepositorio;
 using Data.Repositorio;
 using Utils;
 using BLL.Services.Interfaces;
 using BLL.Services;
 
-namespace API.Extensiones
+namespace API.Extensions
 {
     public static class ServicioAplicationExtension
     {
@@ -57,13 +57,18 @@ namespace API.Extensiones
             {
                 options.InvalidModelStateResponseFactory = actionContext =>
                 {
-                    var errores = actionContext.ModelState
+                    var errors = actionContext.ModelState
                                   .Where(e => e.Value.Errors.Count > 0)
-                                  .SelectMany(x => x.Value.Errors)
-                                  .Select(x => x.ErrorMessage).ToArray();
-                    var errorResponse = new ApiValidacionErrorResponse
+                                  // .SelectMany(x => x)
+                                  .Aggregate(new Dictionary<string, string>(), (dict, entry) =>
+                                  {
+                                      var attributeName = ApiValidationErrorResponse.AttributeToCamelCase(entry.Key);
+                                      dict[attributeName] = entry.Value.Errors[0].ErrorMessage;
+                                      return dict;
+                                  });
+                    var errorResponse = new ApiValidationErrorResponse
                     {
-                        Errores = errores,
+                        Errors = errors,
                     };
                     return new BadRequestObjectResult(errorResponse);
                 };

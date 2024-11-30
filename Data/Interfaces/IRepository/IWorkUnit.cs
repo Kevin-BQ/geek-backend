@@ -12,6 +12,10 @@ namespace Data.Interfaces.IRepositorio
         // Interfaces de los modelos
         IBrandRepository Brand { get; }
 
+        ICategoryRepository Category { get; }
+
+        ISubcategoryRepository Subcategory { get; }
+
         Task Save();
     }
 }

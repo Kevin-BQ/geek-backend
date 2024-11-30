@@ -24,6 +24,9 @@ namespace Data
         public DbSet<UserAplication> UserAplication { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Subcategory> Subcategories { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

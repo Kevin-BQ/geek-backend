@@ -73,6 +73,8 @@ namespace API.Extensiones
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped<IBrandService , BrandService>();
+            services.AddScoped<ICategoryService , CategoryService>();
+            services.AddScoped<ISubcategoryService , SubcategoryService>();
 
 
             return services;

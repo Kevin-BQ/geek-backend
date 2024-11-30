@@ -2,6 +2,7 @@ using API.Extensions;
 using API.Middleware;
 using CloudinaryDotNet;
 using Data.Inicializador;
+using dotenv.net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,10 @@ builder.Services.AgregarServiciosIdentidad(builder.Configuration);
 
 // Set your Cloudinary credentials
 //=================================
-Cloudinary cloudinary = new Cloudinary("cloudinary://283118925855333:swH1CWiFNjd3DbCf_5dS94m1FBE@dd2eggia1")
-{
-    Api = { Secure = true }
-};
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+cloudinary.Api.Secure = true;
+
 builder.Services.AddSingleton(cloudinary);
 
 builder.Services.AddScoped<IdbInicializador, DbInicializador>();

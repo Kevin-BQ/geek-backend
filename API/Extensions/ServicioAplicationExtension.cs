@@ -79,6 +79,8 @@ namespace API.Extensions
 
             services.AddScoped<IUploadImage, UploadImage>();
             services.AddScoped<IBrandService , BrandService>();
+            services.AddScoped<ICategoryService , CategoryService>();
+            services.AddScoped<ISubcategoryService , SubcategoryService>();
 
 
             return services;

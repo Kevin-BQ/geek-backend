@@ -86,7 +86,9 @@ namespace BLL.Services
                     throw new TaskCanceledException("La Categoria no Existe");
                 }
 
-                _workUnit.Category.Remove(categoryDb);
+                categoryDb.Estatus = false;
+
+                _workUnit.Category.Update(categoryDb);
                 await _workUnit.Save();
             }
             catch (Exception)
@@ -104,6 +106,23 @@ namespace BLL.Services
                                     orderBy: e => e.OrderBy(e => e.NameCategory));
 
                 return _mapper.Map<IEnumerable<CategoryDto>>(lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesAssests()
+        {
+            try
+            {
+                var lista = await _workUnit.Category.GetAll(
+                                    filtro: e => e.Estatus == true,
+                                    orderBy: e => e.OrderBy(e => e.NameCategory));
+
+                return _mapper.Map<IEnumerable<Category>>(lista);
             }
             catch (Exception)
             {

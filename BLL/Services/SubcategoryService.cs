@@ -84,10 +84,12 @@ namespace BLL.Services
 
                 if (subcategoryDb == null)
                 {
-                    throw new TaskCanceledException("La Categoria no Existe");
+                    throw new TaskCanceledException("La Subcategoria no Existe");
                 }
 
-                _workUnit.Subcategory.Remove(subcategoryDb);
+                subcategoryDb.Estatus = false;
+
+                _workUnit.Subcategory.Update(subcategoryDb);
                 await _workUnit.Save();
             }
             catch (Exception)
@@ -106,6 +108,24 @@ namespace BLL.Services
                                     orderBy: e => e.OrderBy(e => e.NameSubcategory));
 
                 return _mapper.Map<IEnumerable<SubcategoryDto>>(lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Subcategory>> GetSubcategoriesAssests()
+        {
+            try
+            {
+                var lista = await _workUnit.Subcategory.GetAll(
+                                    incluirPropiedades:"Category",
+                                    filtro: e => e.Estatus == true,
+                                    orderBy: e => e.OrderBy(e => e.NameSubcategory));
+
+                return _mapper.Map<IEnumerable<Subcategory>>(lista);
             }
             catch (Exception)
             {

@@ -31,8 +31,7 @@ namespace BLL.Services
         {
             try
             {
-                string file = "brands";
-                string imageUrl = await _uploadImage.UploadImageAsync(brandDto.ImageUrl, file);
+                string imageUrl = await _uploadImage.UploadImageAsync(brandDto.ImageUrl, "brands");
 
                 Brand brand = new Brand
                 {
@@ -77,7 +76,6 @@ namespace BLL.Services
                 }
 
                 brandDb.NameBrand = brandDto.NameBrand;
-                brandDb.Status = brandDto.Status == 1 ? true : false;
 
                 _workUnit.Brand.Update(brandDb);
 

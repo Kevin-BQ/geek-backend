@@ -81,6 +81,8 @@ namespace API.Extensions
             services.AddScoped<IBrandService , BrandService>();
             services.AddScoped<ICategoryService , CategoryService>();
             services.AddScoped<ISubcategoryService , SubcategoryService>();
+            services.AddScoped<IProductService , ProductService>();
+            services.AddScoped<IImageService , ImageService>();
 
 
             return services;

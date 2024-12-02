@@ -47,7 +47,7 @@ namespace BLL.Services
             {
                 throw new Exception("Error al Subir la Imagen");
             }
-
+            Console.WriteLine(uploadResult.JsonObj);
             // Retorna la url en un string
             return uploadResult.SecureUrl.ToString();
         }

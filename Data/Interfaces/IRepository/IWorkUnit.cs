@@ -16,6 +16,10 @@ namespace Data.Interfaces.IRepositorio
 
         ISubcategoryRepository Subcategory { get; }
 
+        IProductRepository Product { get; }
+
+        IImageRepository Image { get; }
+
         Task Save();
     }
 }

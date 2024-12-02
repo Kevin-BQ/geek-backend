@@ -16,6 +16,9 @@ namespace Data.Repositorio
         public IBrandRepository Brand {  get; private set; }
         public ICategoryRepository Category { get; private set; }
         public ISubcategoryRepository Subcategory { get; private set; }
+        public IProductRepository Product { get; private set; }
+        public IImageRepository Image { get; private set; }
+
 
         public WorkUnit(ApplicationDbContext context)
         {
@@ -24,6 +27,8 @@ namespace Data.Repositorio
             Brand = new BrandRepository(context);
             Category = new CategoryRepository(context);
             Subcategory = new SubcategoryRepository(context);
+            Product = new ProductRepository(context);
+            Image = new ImageRepository(context);
         }
 
         public void Dispose()

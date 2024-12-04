@@ -65,12 +65,13 @@ namespace BLL.Services
         {
             try
             {
-                var especialidaDb = await _workUnit.Image.GetFirst(e => e.Id == id);
-                if (especialidaDb == null)
+                var imageDb = await _workUnit.Image.GetFirst(e => e.Id == id);
+                if (imageDb == null)
                 {
                     throw new TaskCanceledException("La Imagen no Existe");
                 }
-                _workUnit.Image.Remove(especialidaDb);
+                _uploadImage.DeleteImage(imageDb.UrlImage);
+                _workUnit.Image.Remove(imageDb);
                 await _workUnit.Save();
             }
             catch (Exception)

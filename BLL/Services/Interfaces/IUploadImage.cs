@@ -10,5 +10,9 @@ namespace BLL.Services.Interfaces
     public interface IUploadImage
     {
         Task<string> UploadImageAsync(IFormFile formFile, string file);
+        Task<string> DeleteImage(string imageUrl);
+
+        string ExtractUrlImage(string imageUrl);
+
     }
 }

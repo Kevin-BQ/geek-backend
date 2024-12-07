@@ -14,16 +14,16 @@ namespace Models.Entities
         public int Id { get; set; }
 
         [Required]
-        [StringLength(60, MinimumLength = 1, ErrorMessage = "Nombre debe ser Minimo 1 Maximo 50 caracteres")]
+        [StringLength(60, MinimumLength = 1, ErrorMessage = "Nombre debe ser minimo 1 maximo 50 caracteres")]
         public string NameProduct { get; set; }
 
-        [Required(ErrorMessage = "Descripcion Requerida")]
+        [Required(ErrorMessage = "Descripcion requerida")]
         public string Description { get; set; }
 
         [Required(ErrorMessage ="Descripcion detallada requerida")]
         public string LargeDescription { get; set; }
 
-        [Required(ErrorMessage ="Precio Requerido")]
+        [Required(ErrorMessage ="Precio requerido")]
         public decimal Price { get; set; }
 
         public int? Stock { get; set; }

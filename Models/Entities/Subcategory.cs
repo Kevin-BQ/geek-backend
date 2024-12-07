@@ -25,6 +25,6 @@ namespace Models.Entities
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-
+        public bool Status { get; set; }
     }
 }

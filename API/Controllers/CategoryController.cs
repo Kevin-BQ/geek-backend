@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interfaces;
+﻿using BLL.Services;
+using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using System.Net;
@@ -73,14 +74,35 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut("{categoryId:int}")]
+        public async Task<IActionResult> UpdateStatus(int categoryId)
         {
             try
             {
-                await _categoryService.DeleteCategory(id);
+                await _categoryService.UpdateStatus(categoryId);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.NoContent;
+
+
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
+
+        [HttpGet("active-categories")]
+        public async Task<IActionResult> GetAssests()
+        {
+            try
+            {
+                _response.Result = await _categoryService.GetCategoriesAssests();
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.OK;
             }
             catch (Exception ex)
             {

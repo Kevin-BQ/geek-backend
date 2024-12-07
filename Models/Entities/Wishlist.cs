@@ -1,27 +1,31 @@
-﻿using System;
+﻿using Models.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Models.Entities
 {
-    public class Image
+    public class Wishlist
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public string UrlImage { get; set; }
+        [Required(ErrorMessage = "Usuario requerido")]
+        public int UserAplicationId { get; set; }
 
-        [Required(ErrorMessage = "Producto requerida")]
+        [ForeignKey("UserId")]
+        public UserAplication UserAplication { get; set; }
+
+        [Required(ErrorMessage = "Producto requerido")]
         public int ProductId { get; set; }
 
-        [JsonIgnore]
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
+
+
     }
 }

@@ -13,7 +13,7 @@ namespace Models.DTOs
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = "Nombre debe ser Minimo 1 Maximo 50 caracteres")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Nombre debe ser minimo 1 maximo 50 caracteres")]
         public string NameBrand { get; set; }
 
         public IFormFile? ImageUrl { get; set; }

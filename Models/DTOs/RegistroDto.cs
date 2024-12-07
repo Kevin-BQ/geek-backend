@@ -9,23 +9,23 @@ namespace Models.DTOs
 {
     public class RegistroDto
     {
-        [Required(ErrorMessage = "UserName Requerido")]
+        [Required(ErrorMessage = "UserName requerido")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Password Requerido")]
-        [StringLength(10, MinimumLength = 3, ErrorMessage = "El password deber der Minimo 3 Maximo 10 caracteres")]
+        [Required(ErrorMessage = "Password requerido")]
+        [StringLength(10, MinimumLength = 3, ErrorMessage = "El password deber der minimo 3 maximo 10 caracteres")]
         public string Password{ get; set; }
 
-        [Required(ErrorMessage = "Apellidos Requeridos")]
+        [Required(ErrorMessage = "Apellidos requeridos")]
         public string LatName { get; set; }
 
-        [Required(ErrorMessage = "Nombres Requeridos")]
+        [Required(ErrorMessage = "Nombres requeridos")]
         public string Names { get; set; }
 
-        [Required(ErrorMessage = "Email Requeridos")]
+        [Required(ErrorMessage = "Email requeridos")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Rol Requeridos")]
+        [Required(ErrorMessage = "Rol requeridos")]
         public string Role { get; set; }
     }
 }

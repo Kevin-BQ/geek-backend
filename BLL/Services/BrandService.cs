@@ -76,6 +76,7 @@ namespace BLL.Services
                 }
 
                 brandDb.NameBrand = brandDto.NameBrand;
+                brandDb.Status = brandDto.Status == 1 ? true : false;
 
                 _workUnit.Brand.Update(brandDb);
 
@@ -89,7 +90,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task DeleteBrand(int id)
+        public async Task UpdateStatus(int id)
         {
             try
             {
@@ -100,7 +101,7 @@ namespace BLL.Services
                     throw new TaskCanceledException("La Marca no Existe");
                 }
 
-                brandDb.Status = false;
+                brandDb.Status = !brandDb.Status;
 
                 _workUnit.Brand.Update(brandDb);
                 await _workUnit.Save();

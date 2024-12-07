@@ -73,12 +73,12 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut("{brandId:int}")]
+        public async Task<IActionResult> UpdateStatus(int brandId)
         {
             try
             {
-                await _brandService.DeleteBrand(id);
+                await _brandService.UpdateStatus(brandId);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.NoContent;
             }
@@ -92,7 +92,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpGet("GetAssets")]
+        [HttpGet("active-brands")]
         public async Task<IActionResult> GetAssests()
         {
             try

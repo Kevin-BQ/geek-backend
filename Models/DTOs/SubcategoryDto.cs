@@ -14,12 +14,12 @@ namespace Models.DTOs
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = "Nombre debe ser Minimo 1 Maximo 50 caracteres")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "Nombre debe ser minimo 1 maximo 50 caracteres")]
         public string NameSubcategory { get; set; }
 
-        public int Estatus { get; set; }
+        public int Status { get; set; }
 
-        [Required(ErrorMessage = "Especialida Requerida")]
+        [Required(ErrorMessage = "Categoria requerida")]
         public int CategoryId { get; set; }
 
         public string? NameCategory { get; set; }

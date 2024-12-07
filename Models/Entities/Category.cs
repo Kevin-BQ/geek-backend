@@ -17,5 +17,6 @@ namespace Models.Entities
         public string NameCategory { get; set; }
 
         public bool Estatus { get; set; }
+        public bool Status { get; set; }
     }
 }

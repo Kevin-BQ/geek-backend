@@ -1,4 +1,5 @@
 ﻿using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace BLL.Services.Interfaces
         Task<IEnumerable<SubcategoryDto>> GetAllSubcategories();
         Task<SubcategoryDto> AddSubcategory(SubcategoryDto subcategoryDto);
         Task UpdateSubcategory(SubcategoryDto subcategoryDto);
-        Task DeleteSubcategory(int id);
+        Task UpdateStatus(int id);
+        Task<IEnumerable<Subcategory>> GetSubcategoriesAssests();
     }
 }

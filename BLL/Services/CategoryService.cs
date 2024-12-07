@@ -29,7 +29,7 @@ namespace BLL.Services
                 Category category = new Category
                 {
                     NameCategory = categoryDto.NameCategory,
-                    Estatus = categoryDto.Estatus == 1 ? true : false
+                    Status = categoryDto.Status == 1 ? true : false
                 };
 
                 await _workUnit.Category.Add(category);
@@ -61,7 +61,7 @@ namespace BLL.Services
                 }
 
                 categoryDb.NameCategory = categoryDto.NameCategory;
-                categoryDb.Estatus = categoryDto.Estatus == 1 ? true : false;
+                categoryDb.Status = categoryDto.Status == 1 ? true : false;
 
                 _workUnit.Category.Update(categoryDb);
 
@@ -75,7 +75,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task DeleteCategory(int id)
+        public async Task UpdateStatus(int id)
         {
             try
             {
@@ -86,7 +86,9 @@ namespace BLL.Services
                     throw new TaskCanceledException("La Categoria no Existe");
                 }
 
-                _workUnit.Category.Remove(categoryDb);
+                categoryDb.Status = !categoryDb.Status;
+
+                _workUnit.Category.Update(categoryDb);
                 await _workUnit.Save();
             }
             catch (Exception)
@@ -104,6 +106,23 @@ namespace BLL.Services
                                     orderBy: e => e.OrderBy(e => e.NameCategory));
 
                 return _mapper.Map<IEnumerable<CategoryDto>>(lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesAssests()
+        {
+            try
+            {
+                var lista = await _workUnit.Category.GetAll(
+                                    filtro: e => e.Status == true,
+                                    orderBy: e => e.OrderBy(e => e.NameCategory));
+
+                return _mapper.Map<IEnumerable<Category>>(lista);
             }
             catch (Exception)
             {

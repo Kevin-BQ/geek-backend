@@ -14,7 +14,7 @@ namespace BLL.Services.Interfaces
         Task<IEnumerable<Brand>> GetAllBrands();
         Task<BrandDto> AddBrand(BrandDto brandDto);
         Task UpdateBrand(BrandDto brandDto);
-        Task DeleteBrand(int id);
+        Task UpdateStatus(int id);
         Task<IEnumerable<Brand>> GetBrandsAssests();
 
 

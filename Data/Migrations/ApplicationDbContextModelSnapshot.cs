@@ -289,7 +289,7 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Estatus")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.Property<string>("NameCategory")
@@ -497,7 +497,7 @@ namespace Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Estatus")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.Property<string>("NameSubcategory")

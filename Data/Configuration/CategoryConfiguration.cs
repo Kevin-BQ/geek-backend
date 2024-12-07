@@ -15,7 +15,7 @@ namespace Data.Configuration
         {
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.NameCategory).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Estatus).IsRequired();
+            builder.Property(x => x.Status).IsRequired();
         }
     }
 }

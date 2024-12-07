@@ -24,7 +24,7 @@ namespace Data.Repository
             if (category != null)
             {
                 categoryDb.NameCategory = category.NameCategory;
-                categoryDb.Estatus = categoryDb.Estatus;
+                categoryDb.Status = categoryDb.Status;
 
                 _context.SaveChanges();
             }

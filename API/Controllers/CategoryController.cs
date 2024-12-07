@@ -74,14 +74,16 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut("{categoryId:int}")]
+        public async Task<IActionResult> UpdateStatus(int categoryId)
         {
             try
             {
-                await _categoryService.DeleteCategory(id);
+                await _categoryService.UpdateStatus(categoryId);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.NoContent;
+
+
             }
             catch (Exception ex)
             {
@@ -93,7 +95,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpGet("GetAssets")]
+        [HttpGet("active-categories")]
         public async Task<IActionResult> GetAssests()
         {
             try

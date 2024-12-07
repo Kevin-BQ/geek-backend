@@ -30,7 +30,7 @@ namespace BLL.Services
                 {
                     NameSubcategory = subcategoryDto.NameSubcategory,
                     CategoryId = subcategoryDto.CategoryId,
-                    Estatus = subcategoryDto.Estatus == 1 ? true : false
+                    Status = subcategoryDto.Status == 1 ? true : false
                 };
 
                 await _workUnit.Subcategory.Add(subcategory);
@@ -62,7 +62,8 @@ namespace BLL.Services
                 }
 
                 SubcategoryDb.NameSubcategory = subcategoryDto.NameSubcategory;
-                SubcategoryDb.Estatus = subcategoryDto.Estatus == 1 ? true : false;
+                SubcategoryDb.Status = subcategoryDto.Status == 1 ? true : false;
+                SubcategoryDb.CategoryId = subcategoryDto.CategoryId;
 
                 _workUnit.Subcategory.Update(SubcategoryDb);
 
@@ -76,7 +77,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task DeleteSubcategory(int id)
+        public async Task UpdateStatus(int id)
         {
             try
             {
@@ -87,7 +88,7 @@ namespace BLL.Services
                     throw new TaskCanceledException("La Subcategoria no Existe");
                 }
 
-                subcategoryDb.Estatus = false;
+                subcategoryDb.Status = !subcategoryDb.Status;
 
                 _workUnit.Subcategory.Update(subcategoryDb);
                 await _workUnit.Save();
@@ -120,9 +121,12 @@ namespace BLL.Services
         {
             try
             {
+
+
+
                 var lista = await _workUnit.Subcategory.GetAll(
                                     incluirPropiedades:"Category",
-                                    filtro: e => e.Estatus == true,
+                                    filtro: e => e.Status == true && e.Category.Status == true,
                                     orderBy: e => e.OrderBy(e => e.NameSubcategory));
 
                 return _mapper.Map<IEnumerable<Subcategory>>(lista);

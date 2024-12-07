@@ -14,16 +14,16 @@ namespace Models.DTOs
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Nombre Requerido")]
+        [Required(ErrorMessage = "Nombre requerido")]
         public string NameProduct { get; set; }
 
-        [Required(ErrorMessage = "Descripcion Requerida")]
+        [Required(ErrorMessage = "Descripcion requerida")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Descripcion detallada requerida")]
         public string LargeDescription { get; set; }
 
-        [Required(ErrorMessage = "Precio Requerido")]
+        [Required(ErrorMessage = "Precio requerido")]
         public decimal Price { get; set; }
 
         public int? Stock { get; set; }
@@ -31,7 +31,7 @@ namespace Models.DTOs
         public int? Status { get; set; }
 
 
-        [Required(ErrorMessage = "Marca Requerida")]
+        [Required(ErrorMessage = "Marca requerida")]
         public int BrandId { get; set; }
 
         public string? NameBrand { get; set; }

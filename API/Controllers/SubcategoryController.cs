@@ -74,12 +74,12 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut("{subcategoryId:int}")]
+        public async Task<IActionResult> UpdateStatus(int subcategoryId)
         {
             try
             {
-                await _subcategoryService.DeleteSubcategory(id);
+                await _subcategoryService.UpdateStatus(subcategoryId);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.NoContent;
             }
@@ -93,7 +93,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [HttpGet("GetAssets")]
+        [HttpGet("active-subcategories")]
         public async Task<IActionResult> GetAssests()
         {
             try

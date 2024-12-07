@@ -24,7 +24,7 @@ namespace Data.Repository
             if (subcategory != null)
             {
                 subcategoryDb.NameSubcategory = subcategory.NameSubcategory;
-                subcategoryDb.Estatus = subcategoryDb.Estatus;
+                subcategoryDb.Status = subcategoryDb.Status;
                 subcategoryDb.CategoryId = subcategory.CategoryId;
 
                 _context.SaveChanges();

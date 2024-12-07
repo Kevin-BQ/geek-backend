@@ -18,7 +18,11 @@ namespace Data.Repositorio
         public ISubcategoryRepository Subcategory { get; private set; }
         public IProductRepository Product { get; private set; }
         public IImageRepository Image { get; private set; }
-
+        public IShoppingCartRepository ShoppingCart { get; private set; }
+        public IUserRepository User { get; private set; }
+        public IShoppingCarItemsRepository ShoppingCarItem { get; private set; }
+        public IOrderRepository Order { get; private set; }
+        public IOrderItemRepository OrderItem { get; private set; }
 
         public WorkUnit(ApplicationDbContext context)
         {
@@ -29,6 +33,11 @@ namespace Data.Repositorio
             Subcategory = new SubcategoryRepository(context);
             Product = new ProductRepository(context);
             Image = new ImageRepository(context);
+            ShoppingCart = new ShoppingCartRepository(context);
+            User = new UserRepository(context);
+            ShoppingCarItem = new ShoppingCartItemsRepository(context);
+            Order = new OrderRepository(context);
+            OrderItem = new OrderItemRepository(context);
         }
 
         public void Dispose()

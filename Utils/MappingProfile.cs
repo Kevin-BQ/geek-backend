@@ -43,6 +43,21 @@ namespace Utils
 
             CreateMap<ImageDto, Image>()
                     .ForMember(d => d.UrlImage, m => m.Ignore());
+
+            CreateMap<ShoppingCart, ShoppingCartDto>()
+                    .ForMember(d => d.NameUser, m => m.MapFrom(o => o.User.Names));
+
+            CreateMap<ShoppingCartDto, ShoppingCart>();
+
+            CreateMap<ShoppingCartItem, ShoppingCartItemDto>()
+                .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct));
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(d => d.Status, m => m.MapFrom(o => o.Status == true ? 1 : 0));
+
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct));
+
         }
     }
 }

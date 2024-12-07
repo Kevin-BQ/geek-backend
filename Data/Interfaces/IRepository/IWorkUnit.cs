@@ -20,6 +20,16 @@ namespace Data.Interfaces.IRepositorio
 
         IImageRepository Image { get; }
 
+        IShoppingCartRepository ShoppingCart { get; }
+
+        IUserRepository User { get; }
+
+        IShoppingCarItemsRepository ShoppingCarItem { get; }
+
+        IOrderRepository Order { get; }
+
+        IOrderItemRepository OrderItem { get; }
+
         Task Save();
     }
 }

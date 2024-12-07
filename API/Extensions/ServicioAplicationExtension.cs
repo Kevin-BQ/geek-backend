@@ -83,6 +83,8 @@ namespace API.Extensions
             services.AddScoped<ISubcategoryService , SubcategoryService>();
             services.AddScoped<IProductService , ProductService>();
             services.AddScoped<IImageService , ImageService>();
+            services.AddScoped<IShoppingCartService , ShoppingCartService>();
+            services.AddScoped<IShoppingCartItemService , ShoppingCartItemService>();
 
 
             return services;

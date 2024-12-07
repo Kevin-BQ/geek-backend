@@ -36,6 +36,7 @@ namespace BLL.Services
                     Price = productDto.Price,
                     Stock = productDto.Stock,
                     Status = productDto.Status == 1 ? true : false,
+                    Discount = productDto.Discount,
                     BrandId = productDto.BrandId,
                     CategoryId = productDto.CategoryId,
                     SubCategoryId = productDto.SubCategoryId
@@ -81,9 +82,11 @@ namespace BLL.Services
                 productDb.LargeDescription = productDto.LargeDescription;
                 productDb.Price = productDto.Price;
                 productDb.Stock = productDto.Stock;
+                productDb.Discount = productDto.Discount;
                 productDb.BrandId = productDto.BrandId;
                 productDb.CategoryId = productDto.CategoryId;
                 productDb.SubCategoryId = productDto.SubCategoryId;
+
 
                 _workUnit.Product.Update(productDb);
 

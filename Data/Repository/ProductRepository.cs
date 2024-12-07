@@ -30,6 +30,7 @@ namespace Data.Repository
                 productDb.Price = product.Price;
                 productDb.Stock = product.Stock;
                 productDb.Status = product.Status;
+                productDb.Discount = product.Discount;
                 productDb.BrandId = product.BrandId;
                 productDb.CategoryId = product.CategoryId;
                 productDb.SubCategoryId = product.SubCategoryId;

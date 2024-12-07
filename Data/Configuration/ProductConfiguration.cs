@@ -19,6 +19,7 @@ namespace Data.Configuration
             builder.Property(x => x.LargeDescription).IsRequired();
             builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(10,2)");
             builder.Property(x => x.Stock).IsRequired(false);
+            builder.Property(x => x.Discount).IsRequired(false).HasColumnType("decimal(10,2)");
 
             builder.HasOne(x => x.Brand).WithMany()
                    .HasForeignKey(x => x.BrandId)

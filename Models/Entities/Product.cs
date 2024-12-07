@@ -52,5 +52,7 @@ namespace Models.Entities
         public Subcategory Subcategory { get; set; }
 
         public ICollection<Image>? Images { get; set; }
+
+        public decimal? Discount { get; set; }
     }
 }

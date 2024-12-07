@@ -30,6 +30,7 @@ namespace Models.DTOs
 
         public int? Status { get; set; }
 
+        public decimal Discount { get; set; }
 
         [Required(ErrorMessage = "Marca Requerida")]
         public int BrandId { get; set; }

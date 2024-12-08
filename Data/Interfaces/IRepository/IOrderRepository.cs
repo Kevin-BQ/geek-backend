@@ -10,6 +10,6 @@ namespace Data.Interfaces.IRepository
 {
     public interface IOrderRepository: IGenericRepository<Order>
     {
-
+        void Update(Order order);
     }
 }

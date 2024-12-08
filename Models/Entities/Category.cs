@@ -16,7 +16,6 @@ namespace Models.Entities
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Nombre debe ser Minimo 1 Maximo 50 caracteres")]
         public string NameCategory { get; set; }
 
-        public bool Estatus { get; set; }
         public bool Status { get; set; }
     }
 }

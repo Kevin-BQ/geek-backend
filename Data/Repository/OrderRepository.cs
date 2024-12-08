@@ -16,5 +16,17 @@ namespace Data.Repository
         {
             _context = context;
         }
+
+        public void Update(Order order)
+        {
+            var orderDb = _context.Orders.FirstOrDefault(e => e.Id == order.Id);
+
+            if (order != null)
+            {
+                orderDb.Status = order.Status;
+
+                _context.SaveChanges();
+            }
+        }
     }
 }

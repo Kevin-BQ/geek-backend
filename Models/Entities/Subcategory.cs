@@ -17,7 +17,7 @@ namespace Models.Entities
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Nombre debe ser Minimo 1 Maximo 50 caracteres")]
         public string NameSubcategory { get; set; }
 
-        public bool Estatus { get; set; }
+        public bool Status { get; set; }
 
         [Required(ErrorMessage = "Categoria Requerida")]
         public int CategoryId { get; set; }
@@ -25,6 +25,5 @@ namespace Models.Entities
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-        public bool Status { get; set; }
     }
 }

@@ -4,9 +4,12 @@ using Data.Interfaces.IRepositorio;
 using Models.DTOs;
 using Models.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -158,6 +161,40 @@ namespace BLL.Services
             }
         }
 
+        public async Task<IEnumerable<Product>> FilterProducts(int? brandId, int? categoryId, int? subCategoryId)
+        {
+            try
+            {
+                var list = await _workUnit.Product.GetAll(
+                    incluirPropiedades: "Brand,Category,Subcategory,Images",
+                    filtro: e => e.Status == true,  
+                    orderBy: e => e.OrderBy(e => e.NameProduct)
+                );
 
+                if (brandId.HasValue && brandId.Value != 0)
+                {
+                    list = list.Where(e => e.BrandId == brandId.Value);
+                }
+
+                if (categoryId.HasValue && categoryId.Value != 0)
+                {
+                    list = list.Where(e => e.CategoryId == categoryId.Value);
+                }
+
+                if (subCategoryId.HasValue && subCategoryId.Value != 0)
+                {
+                    list = list.Where(e => e.SubCategoryId == subCategoryId.Value);
+                }
+
+                return _mapper.Map<IEnumerable<Product>>(list);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

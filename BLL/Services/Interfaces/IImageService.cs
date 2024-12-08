@@ -11,7 +11,7 @@ namespace BLL.Services.Interfaces
 {
     public interface IImageService
     {
-        Task<IEnumerable<Image>> GetAllImages();
+        Task<IEnumerable<ImageDto>> GetAllImages();
         Task<ImageDto> AddImage(int productId, IFormFile imageFile);
         public Task Remove(int id);
     }

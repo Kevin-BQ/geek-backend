@@ -81,7 +81,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<Image>> GetAllImages()
+        public async Task<IEnumerable<ImageDto>> GetAllImages()
         {
             try
             {
@@ -89,7 +89,7 @@ namespace BLL.Services
                                     incluirPropiedades: "Product",
                                     orderBy: e => e.OrderBy(e => e.Id));
 
-                return _mapper.Map<IEnumerable<Image>>(lista.ToList());
+                return _mapper.Map<IEnumerable<ImageDto>>(lista.ToList());
             }
             catch (Exception)
             {
@@ -97,8 +97,6 @@ namespace BLL.Services
                 throw;
             }
         }
-
-
 
     }
 }

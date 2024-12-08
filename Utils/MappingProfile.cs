@@ -39,6 +39,7 @@ namespace Utils
 
             CreateMap<Image, ImageDto>()
                     .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct))
+                    .ForMember(d => d.ImageProduct, m => m.MapFrom(o => o.UrlImage))
                     .ForMember(d => d.UrlImage, m => m.Ignore());
 
             CreateMap<ImageDto, Image>()

@@ -196,5 +196,30 @@ namespace BLL.Services
                 throw;
             }
         }
+
+        public async Task<Product> GetProduct(int id)
+        {
+            try
+            {
+                var productDb = await _workUnit.Product.GetFirst(e => e.Id == id,
+                                                        incluirPropiedades: "Brand,Category,Subcategory,Images");
+
+                if (productDb == null)
+                {
+                    throw new TaskCanceledException("El producto no Existe");
+                }
+
+                var product = _mapper.Map<Product>(productDb);
+
+                
+                return product;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

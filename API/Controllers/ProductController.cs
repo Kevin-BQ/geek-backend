@@ -36,6 +36,25 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            try
+            {
+                _response.Result = await _productService.GetProduct(id);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(ProductDto productDto)
         {

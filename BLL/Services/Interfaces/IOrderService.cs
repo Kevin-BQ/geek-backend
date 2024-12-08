@@ -11,6 +11,7 @@ namespace BLL.Services.Interfaces
     {
         Task<IEnumerable<OrderDto>> GetAllOrders();
         Task<OrderDto> AddOrder(OrderDto orderDto);
+        Task UpdateStatusOrder(OrderDto orderDto);
         Task Remove(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interfaces;
+﻿using BLL.Services;
+using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using System.Net;
@@ -43,6 +44,25 @@ namespace API.Controllers
                 await _orderService.AddOrder(orderDto);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.Created;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(OrderDto orderDto)
+        {
+            try
+            {
+                await _orderService.UpdateStatusOrder(orderDto);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.NoContent;
             }
             catch (Exception ex)
             {

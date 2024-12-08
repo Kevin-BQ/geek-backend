@@ -3,6 +3,7 @@ using BLL.Services.Interfaces;
 using Data.Interfaces.IRepositorio;
 using Models.DTOs;
 using Models.Entities;
+using Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,11 @@ namespace BLL.Services
                 {
                     UserId = orderDto.UserId,
                     OrderDate = DateTime.Now,
-                    RequiredDate = DateTime.Now.AddDays(7), // 7 dias
-                    Status = orderDto.Status == 1 ? true: false,
+                    RequiredDate = DateTime.Now.AddDays(7),
+                    Status = orderDto.Status == 1 ? true : false,
+                    OrderStatus = Enum.TryParse<OrderStatus>(orderDto.OrderStatus, true, out var status)
+                    ? status
+                    : OrderStatus.Comprado
                 };
 
                 await _workUnit.Order.Add(order);
@@ -91,6 +95,28 @@ namespace BLL.Services
             }
         }
 
+        public async Task UpdateStatusOrder(OrderDto orderDto)
+        {
+            try
+            {
+                var orderDb = await _workUnit.Order.GetFirst(e => e.Id == orderDto.Id);
+                if (orderDb == null)
+                {
+                    throw new TaskCanceledException("La orden no Existe");
+                }
 
+                if (Enum.TryParse<OrderStatus>(orderDto.OrderStatus, true, out var status))
+                {
+                    orderDb.OrderStatus = status;
+                }
+
+                _workUnit.Order.Update(orderDb);
+                await _workUnit.Save();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

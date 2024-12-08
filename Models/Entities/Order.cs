@@ -1,4 +1,5 @@
 ﻿using Models.Entidades;
+using Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +22,7 @@ namespace Models.Entities
         public DateTime OrderDate { get; set; }
         public DateTime RequiredDate { get; set; }
         public bool Status { get; set; }
+        public OrderStatus? OrderStatus { get; set; }
 
     }
 }

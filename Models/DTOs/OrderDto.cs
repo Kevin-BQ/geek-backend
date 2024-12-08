@@ -21,5 +21,7 @@ namespace Models.DTOs
         public DateTime RequiredDate { get; set; }
 
         public int Status { get; set; }
+
+        public string? OrderStatus { get; set; }
     }
 }

@@ -54,7 +54,8 @@ namespace Utils
 
             CreateMap<Order, OrderDto>()
                     .ForMember(d => d.NameUser, m => m.MapFrom(o => o.User.Names))
-                    .ForMember(d => d.Status, m => m.MapFrom(o => o.Status == true ? 1 : 0));
+                    .ForMember(d => d.Status, m => m.MapFrom(o => o.Status == true ? 1 : 0))
+                    .ForMember(d => d.OrderStatus, m => m.MapFrom(o => o.OrderStatus));
 
             CreateMap<OrderItem, OrderItemDto>()
                     .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct));

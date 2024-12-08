@@ -24,7 +24,7 @@ namespace Data.Repository
             if (order != null)
             {
                 orderDb.Status = order.Status;
-
+                orderDb.OrderStatus = order.OrderStatus;
                 _context.SaveChanges();
             }
         }

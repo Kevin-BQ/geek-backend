@@ -71,12 +71,13 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<OrderItemDto>> GetAllOrderItems()
+        public async Task<IEnumerable<OrderItemDto>> GetAllOrderItems(int orderId)
         {
             try
             {
                 var lista = await _workUnit.OrderItem.GetAll(
-                                    incluirPropiedades: "Order,Product",
+                                    filtro: e => e.OrderId == orderId,
+                                    incluirPropiedades: "Order,Product.Brand,Product.Category,Product.Subcategory",
                                     orderBy: e => e.OrderBy(e => e.Id));
 
                 return _mapper.Map<IEnumerable<OrderItemDto>>(lista.ToList());

@@ -74,6 +74,8 @@ namespace API.Extensions
                 };
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IWorkUnit, WorkUnit>();
             services.AddAutoMapper(typeof(MappingProfile));
 

@@ -51,7 +51,8 @@ namespace Utils
             CreateMap<ShoppingCartDto, ShoppingCart>();
 
             CreateMap<ShoppingCartItem, ShoppingCartItemDto>()
-                    .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct));
+                    .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct))
+                    .ForMember(d => d.Product, m => m.MapFrom(o => o.Product));
 
             CreateMap<Order, OrderDto>()
                     .ForMember(d => d.NameUser, m => m.MapFrom(o => o.User.Names))

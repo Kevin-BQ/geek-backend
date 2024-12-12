@@ -23,6 +23,7 @@ namespace Models.Entities
         public DateTime RequiredDate { get; set; }
         public bool Status { get; set; }
         public OrderStatus? OrderStatus { get; set; }
+        public decimal? Total { get; set; }
 
     }
 }

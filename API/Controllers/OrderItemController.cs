@@ -16,12 +16,12 @@ namespace API.Controllers
             _response = new();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{orderId:int}")]
+        public async Task<IActionResult> Get(int orderId)
         {
             try
             {
-                _response.Result = await _orderItemService.GetAllOrderItems();
+                _response.Result = await _orderItemService.GetAllOrderItems(orderId);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.OK;
             }

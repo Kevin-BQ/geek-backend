@@ -18,6 +18,8 @@ namespace Models.DTOs
 
         public string? NameProduct { get; set; }
 
+        public Product? Product { get; set; }
+
         public int Quantity { get; set; }
 
         public decimal ListPrice { get; set; }

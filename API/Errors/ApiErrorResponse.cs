@@ -4,16 +4,16 @@ namespace API.Errors
 {
     public class ApiErrorResponse
     {
-        public ApiErrorResponse(int statusCode, string mensaje=null)
+        public ApiErrorResponse(int statusCode, string message=null)
         {
             StatusCode = statusCode;
-            Mensaje = mensaje ?? GetMensajeStatusCode(statusCode);
+            Message = message ?? GetMessageStatusCode(statusCode);
         }
 
         public int StatusCode { get; set; }
-        public string Mensaje { get; set; }
+        public string Message { get; set; }
 
-        private string GetMensajeStatusCode(int statusCode)
+        private string GetMessageStatusCode(int statusCode)
         {
             return statusCode switch
             {

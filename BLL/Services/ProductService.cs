@@ -114,7 +114,7 @@ namespace BLL.Services
                     throw new TaskCanceledException("El producto no Existe");
                 }
 
-                productDb.Status = false;
+                productDb.Status = !productDb.Status;
 
                 _workUnit.Product.Update(productDb);
                 await _workUnit.Save();

@@ -9,7 +9,7 @@ namespace BLL.Services.Interfaces
 {
     public interface IOrderItemService
     {
-        Task<IEnumerable<OrderItemDto>> GetAllOrderItems();
+        Task<IEnumerable<OrderItemDto>> GetAllOrderItems(int orderId);
         Task<OrderItemDto> AddOrderItem(OrderItemDto orderItemDto);
         Task Remove(int id);
     }

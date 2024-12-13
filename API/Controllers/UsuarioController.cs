@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Azure;
+using Data;
 using Data.Interfaces;
 using Data.Servicios;
 using Microsoft.AspNetCore.Authorization;
@@ -31,15 +32,34 @@ namespace API.Controllers
             _roleManager = roleManager;
         }
 
-        /*
-        [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsurios()
+        [Authorize(Policy = "AdminRol")]
+        [HttpGet] 
+        public async Task<ActionResult> GetUsers()
         {
-            var usuarios = await _context.Usuarios.ToListAsync();
-            return Ok(usuarios);
+            var users = await _userManager.Users
+                .Select(u => new ListUserDto()
+                {
+                    Username = u.UserName,
+                    Lastname = u.LastName,
+                    Firstname = u.Names,
+                    Email = u.Email,
+                    Role = string.Join(",", u.UserRole.Select(ur => ur))
+                })
+                .ToListAsync();
+
+            foreach (var user in users)
+            {
+                var appUser = await _userManager.FindByNameAsync(user.Username);
+                user.Role = string.Join(",", await _userManager.GetRolesAsync(appUser));
+            }
+
+            _apiResponse.Result = users;
+            _apiResponse.IsSuccessful = true;
+            _apiResponse.statusCode = HttpStatusCode.OK;
+            return Ok(_apiResponse);
         }
 
+        /*
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id) 
@@ -47,7 +67,7 @@ namespace API.Controllers
             var usuario = await _context.Usuarios.FindAsync(id);
             return Ok(usuario);
         }*/
-        [Authorize(Policy ="AdminRol")]
+
         [HttpPost("registro")]
         public async Task<ActionResult<UsuarioDto>> Register(RegistroDto registroDto)
         {

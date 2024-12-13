@@ -49,7 +49,7 @@ namespace BLL.Services
 
                 if (image.Id == 0)
                 {
-                    throw new TaskCanceledException("No se puedo agregar una nueva Categoria");
+                    throw new TaskCanceledException("No se puedo agregar una nueva Imagen");
                 }
 
                 return _mapper.Map<ImageDto>(image);

@@ -19,6 +19,7 @@ namespace Data.Configuration
             builder.Property(x => x.RequiredDate).HasConversion(typeof(DateTime)).IsRequired();
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.OrderStatus).IsRequired(false);
+            builder.Property(x => x.Total).IsRequired(false).HasColumnType("decimal(10,2)");
 
             builder.HasOne(x => x.User).WithMany()
                    .HasForeignKey(x => x.UserId)

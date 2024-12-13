@@ -2,7 +2,7 @@
 {
     public class ApiException: ApiErrorResponse
     {
-        public ApiException(int statusCode, string mensaje = null, string detalle = null) : base(statusCode, mensaje)
+        public ApiException(int statusCode, string message = null, string detalle = null) : base(statusCode, message)
         {
             Detalle = detalle;
         }

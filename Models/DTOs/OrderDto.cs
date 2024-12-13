@@ -23,5 +23,6 @@ namespace Models.DTOs
         public int Status { get; set; }
 
         public string? OrderStatus { get; set; }
+        public decimal? Total { get; set; }
     }
 }

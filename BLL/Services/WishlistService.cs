@@ -28,7 +28,7 @@ namespace BLL.Services
 
 
 
-        public async Task<IEnumerable<WishlistDto>> GetMyWishlist()
+        public async Task<IEnumerable<Wishlist>> GetMyWishlist()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace BLL.Services
                                     incluirPropiedades: "Product.Brand,Product.Category,Product.Subcategory,Product.Images",
                                     orderBy: e => e.OrderBy(e => e.Product.NameProduct));
 
-                return _mapper.Map<IEnumerable<WishlistDto>>(lista.ToList());
+                return _mapper.Map<IEnumerable<Wishlist>>(lista.ToList());
             }
             catch (Exception)
             {
@@ -58,9 +58,17 @@ namespace BLL.Services
         {
             try
             {
+                var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null)
+                {
+                    throw new InvalidOperationException("Usuario no autenticado.");
+                }
+
+                int userId = int.Parse(userIdClaim.Value);
+
                 Wishlist wishlist = new Wishlist
                 {
-                    UserAplicationId = wishlistDto.UserId,
+                    UserAplicationId = userId,
                     ProductId = wishlistDto.ProductId,
                 };
 
@@ -80,12 +88,6 @@ namespace BLL.Services
                 throw;
             }
         }
-
-
-
-        
-
-
 
         public async Task DeleteWishlist(int wishlistId)
         {

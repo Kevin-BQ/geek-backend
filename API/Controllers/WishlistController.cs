@@ -1,4 +1,5 @@
 ﻿using Azure;
+using BLL.Services;
 using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,8 +40,42 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> Create(WishlistDto wishlistDto)
+        {
+            try
+            {
+                await _wishlistService.AddWishlist(wishlistDto);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.Created;
+            }
+            catch (Exception ex)
+            {
 
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
 
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _wishlistService.DeleteWishlist(id);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.NoContent;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
     }
 }

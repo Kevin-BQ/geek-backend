@@ -17,7 +17,7 @@ namespace Models.Entities
         [Required(ErrorMessage = "Usuario requerido")]
         public int UserAplicationId { get; set; }
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserAplicationId")]
         public UserAplication UserAplication { get; set; }
 
         [Required(ErrorMessage = "Producto requerido")]

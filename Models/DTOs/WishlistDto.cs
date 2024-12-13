@@ -20,8 +20,6 @@ namespace Models.DTOs
         [Required(ErrorMessage = "Producto requerido")]
         public int ProductId { get; set; }
 
-        public Product product { get; set; }
-
         public string nameProduct { get; set; }
 
 

@@ -20,12 +20,12 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetProducts(int userAplicationId)
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
         {
             try
             {
-                _response.Result = await _wishlistService.GetProducts(userAplicationId);
+                _response.Result = await _wishlistService.GetMyWishlist();
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.OK;
             }

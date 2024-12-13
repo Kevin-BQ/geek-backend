@@ -22,6 +22,8 @@ namespace Models.DTOs
 
         public Product product { get; set; }
 
+        public string nameProduct { get; set; }
+
 
     }
 }

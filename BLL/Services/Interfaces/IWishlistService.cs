@@ -10,7 +10,7 @@ namespace BLL.Services.Interfaces
 {
     public interface IWishlistService
     {
-        Task<IEnumerable<WishlistDto>> GetProducts(int userAplicationId);
+        Task<IEnumerable<WishlistDto>> GetMyWishlist();
 
         Task<WishlistDto> AddWishlist(WishlistDto wishlistDto);
 

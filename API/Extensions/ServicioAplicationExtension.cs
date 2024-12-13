@@ -89,6 +89,7 @@ namespace API.Extensions
             services.AddScoped<IShoppingCartItemService , ShoppingCartItemService>();
             services.AddScoped<IOrderService , OrderService>();
             services.AddScoped<IOrderItemService , OrderItemService>();
+            services.AddScoped<IWishlistService, WishlistService>();
 
 
 

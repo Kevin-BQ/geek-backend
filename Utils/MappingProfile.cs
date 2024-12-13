@@ -62,6 +62,10 @@ namespace Utils
             CreateMap<OrderItem, OrderItemDto>()
                     .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct));
 
+            CreateMap<Wishlist, WishlistDto>()
+                    .ForMember(d => d.nameProduct, m => m.MapFrom(o => o.Product.NameProduct))
+                    .ForMember(d => d.nameUser, m => m.MapFrom(o => o.UserAplication.Names));
+
         }
     }
 }

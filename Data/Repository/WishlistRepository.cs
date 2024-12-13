@@ -1,0 +1,22 @@
+﻿using Data.Interfaces.IRepository;
+using Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Data.Repository
+{
+    public class WishlistRepository : Repository<Wishlist>, IWishlistRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public WishlistRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
+        }
+
+        
+    }
+}

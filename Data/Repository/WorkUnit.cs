@@ -23,6 +23,7 @@ namespace Data.Repositorio
         public IShoppingCarItemsRepository ShoppingCarItem { get; private set; }
         public IOrderRepository Order { get; private set; }
         public IOrderItemRepository OrderItem { get; private set; }
+        public IWishlistRepository Wishlist { get; private set; }
 
         public WorkUnit(ApplicationDbContext context)
         {
@@ -38,6 +39,7 @@ namespace Data.Repositorio
             ShoppingCarItem = new ShoppingCartItemsRepository(context);
             Order = new OrderRepository(context);
             OrderItem = new OrderItemRepository(context);
+            Wishlist = new WishlistRepository(context);
         }
 
         public void Dispose()

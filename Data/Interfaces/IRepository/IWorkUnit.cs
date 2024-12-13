@@ -30,6 +30,8 @@ namespace Data.Interfaces.IRepositorio
 
         IOrderItemRepository OrderItem { get; }
 
+        IWishlistRepository Wishlist { get; }
+
         Task Save();
     }
 }

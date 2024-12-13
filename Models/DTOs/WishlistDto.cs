@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Models.DTOs
         [Required(ErrorMessage = "Producto requerido")]
         public int ProductId { get; set; }
 
-        public string NameProduct { get; set; }
+        public Product product { get; set; }
 
 
     }

@@ -3,6 +3,7 @@ using BLL.Services.Interfaces;
 using Data.Interfaces.IRepositorio;
 using Models.DTOs;
 using Models.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BLL.Services
 {
@@ -161,38 +163,76 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> FilterProducts(int? brandId, int? categoryId, int? subCategoryId)
+        public async Task<IEnumerable<Product>> FilterProducts(
+            string? searchString, 
+            List<int>? brandIds = null, 
+            List<int>? categoryIds = null, 
+            List<int>? subCategoryIds = null,
+            int? orderType = 0  ,  
+            int page = 1, 
+            int pageSize = 12
+            )
         {
             try
             {
                 var list = await _workUnit.Product.GetAll(
                     incluirPropiedades: "Brand,Category,Subcategory,Images",
-                    filtro: e => e.Status == true,  
-                    orderBy: e => e.OrderBy(e => e.NameProduct)
-                );
+                    filtro: e => e.Status == true,
+                    orderBy: e => e.OrderBy(e => e.NameProduct
+                ));
 
-                if (brandId.HasValue && brandId.Value != 0)
+                // Aplicar filtro de búsqueda
+                if (!string.IsNullOrEmpty(searchString))
                 {
-                    list = list.Where(e => e.BrandId == brandId.Value);
+                    list = list.Where(p => p.NameProduct.ToLower().Contains(searchString.ToLower()));
                 }
 
-                if (categoryId.HasValue && categoryId.Value != 0)
+                if (brandIds != null && brandIds.Any())
                 {
-                    list = list.Where(e => e.CategoryId == categoryId.Value);
+                    list = list.Where(e => brandIds.Contains(e.BrandId));
                 }
 
-                if (subCategoryId.HasValue && subCategoryId.Value != 0)
+                if (categoryIds != null && categoryIds.Any())
                 {
-                    list = list.Where(e => e.SubCategoryId == subCategoryId.Value);
+                    list = list.Where(e => categoryIds.Contains(e.CategoryId));
                 }
+
+                if (subCategoryIds != null && subCategoryIds.Any())
+                {
+                    list = list.Where(e => subCategoryIds.Contains(e.SubCategoryId));
+                }
+
+                switch (orderType)
+                {
+                    case 1: 
+                        list = list.OrderBy(p => p.Price);
+                        break;
+
+                    case 2: 
+                        list = list.OrderByDescending(p => p.Price);
+                        break;
+
+                    default: 
+                        list = list.OrderBy(p => p.NameProduct);
+                        break;
+                }
+
+                // Calcular el número total de productos y páginas
+                var totalProducts = list.Count();
+                var totalPaginas = (int)Math.Ceiling((decimal)totalProducts / pageSize);
+
+                // Aplicar paginación
+                var productos = list
+                    .OrderByDescending(p => p.Price)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
 
                 return _mapper.Map<IEnumerable<Product>>(list);
-
 
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -221,5 +261,6 @@ namespace BLL.Services
                 throw;
             }
         }
+
     }
 }

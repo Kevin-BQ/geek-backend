@@ -91,7 +91,7 @@ namespace BLL.Services
                     product.Stock -= item.Quantity;
                     _workUnit.Product.Update(product);
 
-                    decimal itemTotal = item.Price * item.Quantity - ((decimal)item.Product.Discount * item.Quantity);
+                    decimal itemTotal = item.Price * item.Quantity * (1 - (decimal)item.Product.Discount);
                     order.Total += itemTotal;
                     
 

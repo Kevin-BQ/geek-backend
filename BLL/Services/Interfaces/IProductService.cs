@@ -16,7 +16,8 @@ namespace BLL.Services.Interfaces
         Task DeleteProduct(int id);
         Task<Product> GetProduct(int id);
         Task<IEnumerable<Product>> GetProductsAssests();
-        Task<IEnumerable<Product>> FilterProducts(int? brandId, int? categoryId, int? subCategoryId);
-
+        Task<IEnumerable<Product>> FilterProducts(string? searchString,
+            List<int>? brandIds, List<int>? categoryIds,
+            List<int>? subCategoryIds, int? orderType, int page = 1, int pageSize = 12);
     }
 }

@@ -2,6 +2,7 @@
 using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
+using Models.Entities;
 using System.Net;
 
 namespace API.Controllers
@@ -133,13 +134,15 @@ namespace API.Controllers
 
         [HttpGet("Filter")]
         public async Task<IActionResult> GetFilterProduct(
-                    [FromQuery] int? brandId,
-                    [FromQuery] int? categoryId,
-                    [FromQuery] int? subCategoryId)
+                    string? searchString,
+                    [FromQuery] List<int>? brandsIds,
+                    [FromQuery] List<int>? categoryIds,
+                    [FromQuery] List<int>? subCategoryIds,
+                    int? orderType)
         {
             try
             {
-                _response.Result = await _productService.FilterProducts(brandId, categoryId, subCategoryId); ;
+                _response.Result = await _productService.FilterProducts(searchString , brandsIds, categoryIds, subCategoryIds, orderType); 
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.OK;
             }

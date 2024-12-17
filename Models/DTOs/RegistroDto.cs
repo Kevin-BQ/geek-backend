@@ -17,7 +17,7 @@ namespace Models.DTOs
         public string Password{ get; set; }
 
         [Required(ErrorMessage = "Apellidos requeridos")]
-        public string LatName { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Nombres requeridos")]
         public string Names { get; set; }

@@ -13,5 +13,6 @@ namespace Models.DTOs
         public bool? IsSuccessful { get; set; }
         public string? Message {  get; set; }
         public object? Result { get; set; }
+        public int? Total { get; set; }
     }
 }

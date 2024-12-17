@@ -138,11 +138,16 @@ namespace API.Controllers
                     [FromQuery] List<int>? brandsIds,
                     [FromQuery] List<int>? categoryIds,
                     [FromQuery] List<int>? subCategoryIds,
-                    int? orderType)
+                    int? orderType,
+                    int page = 1
+                    )
         {
             try
             {
-                _response.Result = await _productService.FilterProducts(searchString , brandsIds, categoryIds, subCategoryIds, orderType); 
+                var filter = await _productService.FilterProducts(searchString, brandsIds, categoryIds, subCategoryIds,
+                    orderType, page);
+                _response.Result = filter.Products;
+                _response.Total = filter.Total;
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.OK;
             }

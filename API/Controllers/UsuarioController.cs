@@ -77,7 +77,7 @@ namespace API.Controllers
             {
                 UserName = registroDto.UserName.ToLower(),
                 Email = registroDto.Email,
-                LastName = registroDto.LatName,
+                LastName = registroDto.LastName,
                 Names = registroDto.Names
             };
 

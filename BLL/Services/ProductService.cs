@@ -163,7 +163,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> FilterProducts(
+        public async Task<ProductFilterDTO> FilterProducts(
             string? searchString, 
             List<int>? brandIds = null, 
             List<int>? categoryIds = null, 
@@ -228,7 +228,13 @@ namespace BLL.Services
                     .Take(pageSize)
                     .ToList();
 
-                return _mapper.Map<IEnumerable<Product>>(list);
+                var productoFilter = new ProductFilterDTO()
+                {
+                    Total = totalProducts,
+                    Products = _mapper.Map<IEnumerable<Product>>(productos)
+                };
+                
+                return productoFilter;
 
             }
             catch (Exception)

@@ -1,5 +1,6 @@
 ﻿using BLL.Services;
 using BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using System.Net;
@@ -17,6 +18,7 @@ namespace API.Controllers
             _response = new();
         }
 
+        [Authorize(Policy = "AllRol")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -36,6 +38,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AllRol")]
         [HttpPost]
         public async Task<IActionResult> Create(OrderDto orderDto)
         {
@@ -55,6 +58,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPut]
         public async Task<IActionResult> Edit(OrderDto orderDto)
         {
@@ -74,6 +78,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AllRol")]
         [HttpPost("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

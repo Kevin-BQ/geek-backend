@@ -1,5 +1,6 @@
 ﻿using BLL.Services;
 using BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using Models.Entities;
@@ -18,6 +19,7 @@ namespace API.Controllers
             _response = new();
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -37,6 +39,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProduct(int id)
         {
@@ -56,6 +59,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPost]
         public async Task<IActionResult> Create(ProductDto productDto)
         {
@@ -75,6 +79,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPut]
         public async Task<IActionResult> Edit(ProductDto productDto)
         {
@@ -94,6 +99,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

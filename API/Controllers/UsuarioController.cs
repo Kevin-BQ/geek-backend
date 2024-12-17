@@ -31,7 +31,7 @@ namespace API.Controllers
             _apiResponse = new();
             _roleManager = roleManager;
         }
-
+        
         [Authorize(Policy = "AdminRol")]
         [HttpGet] 
         public async Task<ActionResult> GetUsers()

@@ -1,6 +1,7 @@
 ﻿using Azure;
 using BLL.Services;
 using BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
@@ -20,7 +21,7 @@ namespace API.Controllers
             _response = new();
         }
 
-
+        [Authorize(Policy = "AllRol")]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -40,6 +41,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AllRol")]
         [HttpPost]
         public async Task<IActionResult> Create(WishlistDto wishlistDto)
         {
@@ -59,6 +61,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AllRol")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

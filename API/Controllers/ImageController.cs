@@ -1,5 +1,6 @@
 ﻿using BLL.Services;
 using BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using System.Net;
@@ -17,6 +18,7 @@ namespace API.Controllers
             _response = new();
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -36,6 +38,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPost("{idProduct:int}")]
         public async Task<IActionResult> Create( int idProduct, IFormFile imageFile)
         {
@@ -55,6 +58,7 @@ namespace API.Controllers
             return Ok(_response);
         }
 
+        [Authorize(Policy = "AdminRol")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

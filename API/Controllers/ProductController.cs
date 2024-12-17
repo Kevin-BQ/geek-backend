@@ -39,7 +39,6 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [Authorize(Policy = "AdminRol")]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProduct(int id)
         {

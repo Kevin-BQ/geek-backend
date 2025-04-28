@@ -1,17 +1,13 @@
-﻿using Azure;
-using Data;
-using Data.Interfaces;
-using Data.Servicios;
+﻿using Data.Interfaces;
+using Data.Interfaces.IRepositorio;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using Models.Entidades;
+using Models.Entities;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace API.Controllers
 {
@@ -21,15 +17,17 @@ namespace API.Controllers
         private readonly ITokenService _tokenServicio;
         private ApiResponse _apiResponse;
         private readonly RoleManager<RoleAplication> _roleManager;
+        private readonly IWorkUnit _workUnit;
 
 
         public UsuarioController(UserManager<UserAplication> userManager, ITokenService tokenServicio,
-                                 RoleManager<RoleAplication> roleManager)
+                                 RoleManager<RoleAplication> roleManager, IWorkUnit workUnit)
         {
             _userManager = userManager;
             _tokenServicio = tokenServicio;
             _apiResponse = new();
             _roleManager = roleManager;
+            _workUnit = workUnit;
         }
         
         [Authorize(Policy = "AdminRol")]
@@ -88,6 +86,20 @@ namespace API.Controllers
             var rolResultado = await _userManager.AddToRoleAsync(usuario, registroDto.Role);
 
             if (!rolResultado.Succeeded) return BadRequest("Error al Agregar un Rol");
+
+            var existingCart = await _workUnit.ShoppingCart.GetFirst(c => c.UserId == usuario.Id);
+            if (existingCart == null)
+            {
+                ShoppingCart shoppingCart = new ShoppingCart
+                {
+                    UserId = usuario.Id,
+                    Discount = 0
+                };
+
+                await _workUnit.ShoppingCart.Add(shoppingCart);
+                await _workUnit.Save();
+
+            }
 
             return new UsuarioDto
             {

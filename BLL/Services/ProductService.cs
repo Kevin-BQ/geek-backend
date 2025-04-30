@@ -153,6 +153,26 @@ namespace BLL.Services
             }
         }
 
+        public async Task<IEnumerable<ProductListDto>> GetProductsPopular()
+        {
+            try
+            {
+                var lista = await _workUnit.Product.GetAll(
+                                    incluirPropiedades: "Brand,Category,Subcategory,Images,Reviews",
+                                    filtro: e => e.Status == true,
+                                            orderBy: q => q.OrderByDescending(p => p.Reviews.Average(r => r.Rating))
+                                      .ThenByDescending(p => p.Reviews.Count)
+                                      .ThenBy(p => p.NameProduct));
+
+                return _mapper.Map<IEnumerable<ProductListDto>>(lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<ProductFilterDTO> FilterProducts(
             string? searchString, 
             List<int>? brandIds = null, 

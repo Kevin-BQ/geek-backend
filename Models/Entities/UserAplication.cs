@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Models.Entidades
         public string LastName { get; set; }
         public string Names { get; set; }
         public ICollection<RoleUserAplication> UserRole { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Review> Reviews { get; set; }
 
     }
 }

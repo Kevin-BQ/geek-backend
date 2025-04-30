@@ -32,6 +32,11 @@ namespace Data.Interfaces.IRepositorio
 
         IWishlistRepository Wishlist { get; }
 
+        IReviewsRepository Review { get; }
+
+        ICommentRepository Comment { get; }
+
+
         Task Save();
     }
 }

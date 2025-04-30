@@ -3,16 +3,11 @@ using BLL.Services.Interfaces;
 using Data;
 using Data.Interfaces.IRepositorio;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using Models.Entities;
 using Models.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BLL.Services
 {

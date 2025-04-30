@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Models.DTOs;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Utils
 {
@@ -66,6 +61,56 @@ namespace Utils
                     .ForMember(d => d.nameProduct, m => m.MapFrom(o => o.Product.NameProduct))
                     .ForMember(d => d.nameUser, m => m.MapFrom(o => o.UserAplication.Names));
 
+            CreateMap<Review, ReviewDto>()
+                    .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct))
+                    .ForMember(d => d.NameUser, m => m.MapFrom(o => o.User.Names));
+
+            CreateMap<ReviewDto, Review>();
+            
+            CreateMap<Comment, CommentDto>()
+                    .ForMember(d => d.NameProduct, m => m.MapFrom(o => o.Product.NameProduct))
+                    .ForMember(d => d.Status, m => m.MapFrom(o => o.Status == true ? 1 : 0))
+                    .ForMember(d => d.NameUser, m => m.MapFrom(o => o.User.Names));
+
+            CreateMap<CommentDto, Comment>();
+
+            CreateMap<Product, ProductListDto>()
+                .ForMember(d => d.Status, m => m.MapFrom(o => o.Status ? 1 : 0))
+                .ForMember(d => d.NameBrand, m => m.MapFrom(o => o.Brand.NameBrand))
+                .ForMember(d => d.NameCategory, m => m.MapFrom(o => o.Category.NameCategory))
+                .ForMember(d => d.NameSubCategory, m => m.MapFrom(o => o.Subcategory.NameSubcategory))
+                .ForMember(d => d.Review, m => m.MapFrom(o =>
+                    o.Reviews != null && o.Reviews.Any()
+                        ? (decimal?)o.Reviews.Average(r => r.Rating)
+                        : null))
+                .ForMember(d => d.Image, m => m.MapFrom(o =>
+                    o.Images != null && o.Images.Any()
+                        ? o.Images.First().UrlImage
+                        : null));
+
+            CreateMap<Product, ProductDetailsDto>()
+                .ForMember(d => d.Status, m => m.MapFrom(o => o.Status ? 1 : 0))
+                .ForMember(d => d.NameBrand, m => m.MapFrom(o => o.Brand.NameBrand))
+                .ForMember(d => d.NameCategory, m => m.MapFrom(o => o.Category.NameCategory))
+                .ForMember(d => d.NameSubCategory, m => m.MapFrom(o => o.Subcategory.NameSubcategory))
+                .ForMember(d => d.Review, m => m.MapFrom(o =>
+                    o.Reviews != null && o.Reviews.Any()
+                        ? (decimal?)o.Reviews.Average(r => r.Rating)
+                        : null))
+                .ForMember(d => d.Images, m => m.MapFrom(o =>
+                    o.Images != null && o.Images.Any()
+                        ? o.Images.Select(i => i.UrlImage).ToList()
+                        : new List<string>()))
+                .ForMember(d => d.Comments, m => m.MapFrom(o =>
+                    o.Comments != null
+                        ? o.Comments.Where(c => c.ParentCommentId == null && c.Status)
+                        : new List<Comment>()));
+
+            CreateMap<Comment, CommentResponseDto>()
+                .ForMember(dest => dest.NameUser, opt =>
+                    opt.MapFrom(src => src.User.Names))
+                .ForMember(dest => dest.CommentsChild, opt =>
+                    opt.MapFrom(src => src.CommentsChild.Where(c => c.Status)));
         }
     }
 }

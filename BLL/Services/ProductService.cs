@@ -3,16 +3,6 @@ using BLL.Services.Interfaces;
 using Data.Interfaces.IRepositorio;
 using Models.DTOs;
 using Models.Entities;
-using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BLL.Services
 {
@@ -128,15 +118,15 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<ProductListDto>> GetAllProducts()
         {
             try
             {
                 var lista = await _workUnit.Product.GetAll(
-                                    incluirPropiedades: "Brand,Category,Subcategory,Images", 
+                                    incluirPropiedades: "Brand,Category,Subcategory,Images,Reviews", 
                                     orderBy: e => e.OrderBy(e => e.NameProduct));
 
-                return _mapper.Map<IEnumerable<Product>>(lista.ToList());
+                return _mapper.Map<IEnumerable<ProductListDto>>(lista.ToList());
             }
             catch (Exception)
             {
@@ -145,16 +135,16 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAssests()
+        public async Task<IEnumerable<ProductListDto>> GetProductsAssests()
         {
             try
             {
                 var lista = await _workUnit.Product.GetAll(
-                                    incluirPropiedades: "Brand,Category,Subcategory,Images",
+                                    incluirPropiedades: "Brand,Category,Subcategory,Images,Reviews",
                                     filtro: e => e.Status == true,
                                     orderBy: e => e.OrderBy(e => e.NameProduct));
 
-                return _mapper.Map<IEnumerable<Product>>(lista);
+                return _mapper.Map<IEnumerable<ProductListDto>>(lista);
             }
             catch (Exception)
             {
@@ -243,27 +233,24 @@ namespace BLL.Services
             }
         }
 
-        public async Task<Product> GetProduct(int id)
+        public async Task<ProductDetailsDto> GetProduct(int id)
         {
             try
             {
                 var productDb = await _workUnit.Product.GetFirst(e => e.Id == id,
-                                                        incluirPropiedades: "Brand,Category,Subcategory,Images");
+                                                        incluirPropiedades: "Brand,Category,Subcategory,Images,Reviews,Comments,Comments.CommentsChild");
 
                 if (productDb == null)
                 {
                     throw new TaskCanceledException("El producto no Existe");
                 }
 
-                var product = _mapper.Map<Product>(productDb);
+                var product = _mapper.Map<ProductDetailsDto>(productDb);
 
-                
                 return product;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

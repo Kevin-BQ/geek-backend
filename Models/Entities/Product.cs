@@ -30,13 +30,11 @@ namespace Models.Entities
 
         public bool Status { get; set; }
 
-
         [Required(ErrorMessage = "Marca Requerida")]
         public int BrandId { get; set; }
 
         [ForeignKey("BrandId")]
         public Brand Brand { get; set; }
-
 
         [Required(ErrorMessage = "Categoria Requerida")]
         public int CategoryId { get; set; }
@@ -54,5 +52,8 @@ namespace Models.Entities
         public ICollection<Image>? Images { get; set; }
 
         public decimal? Discount { get; set; }
+
+        public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
+        public ICollection<Review>? Reviews { get; set; } = new List<Review>();
     }
 }

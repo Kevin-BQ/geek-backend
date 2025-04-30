@@ -10,6 +10,7 @@ using Data.Repositorio;
 using Utils;
 using BLL.Services.Interfaces;
 using BLL.Services;
+using System.Text.Json.Serialization;
 
 namespace API.Extensions
 {
@@ -75,6 +76,10 @@ namespace API.Extensions
             });
 
             services.AddHttpContextAccessor();
+            services.AddControllers()
+                .AddJsonOptions(options => {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; 
+                });
 
             services.AddScoped<IWorkUnit, WorkUnit>();
             services.AddAutoMapper(typeof(MappingProfile));
@@ -90,6 +95,8 @@ namespace API.Extensions
             services.AddScoped<IOrderService , OrderService>();
             services.AddScoped<IOrderItemService , OrderItemService>();
             services.AddScoped<IWishlistService, WishlistService>();
+            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<ICommentService, CommentService>();
 
 
 

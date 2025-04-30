@@ -24,6 +24,8 @@ namespace Data.Repositorio
         public IOrderRepository Order { get; private set; }
         public IOrderItemRepository OrderItem { get; private set; }
         public IWishlistRepository Wishlist { get; private set; }
+        public IReviewsRepository Review { get; private set; }
+        public ICommentRepository Comment { get; private set; }
 
         public WorkUnit(ApplicationDbContext context)
         {
@@ -40,6 +42,8 @@ namespace Data.Repositorio
             Order = new OrderRepository(context);
             OrderItem = new OrderItemRepository(context);
             Wishlist = new WishlistRepository(context);
+            Review = new ReviewRepository(context);
+            Comment = new CommentRepository(context);
         }
 
         public void Dispose()

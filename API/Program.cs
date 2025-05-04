@@ -3,6 +3,8 @@ using API.Middleware;
 using CloudinaryDotNet;
 using Data.Inicializador;
 using dotenv.net;
+using Stripe;
+using Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,15 @@ cloudinary.Api.Secure = true;
 
 builder.Services.AddSingleton(cloudinary);
 
+// SET STRIPE
+StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("SECRET_KEY");
+// var stripe = new StripeSettings()
+// {
+//     PublishableKey = Environment.GetEnvironmentVariable("PUBLISHABLE_KEY"),
+//     SecretKey = Environment.GetEnvironmentVariable("SECRET_KEY")
+// };
+// builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("stripe"));
+
 builder.Services.AddScoped<IdbInicializador, DbInicializador>();
 
 var app = builder.Build();
@@ -35,8 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(x => x.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod());
+    .AllowAnyHeader()
+    .AllowAnyMethod());
 
 app.UseAuthentication();
 

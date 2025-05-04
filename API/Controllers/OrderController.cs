@@ -7,14 +7,16 @@ using System.Net;
 
 namespace API.Controllers
 {
-    public class OrderController: BaseApiController
+    public class OrderController : BaseApiController
     {
         private readonly IOrderService _orderService;
+        private readonly IShoppingCartItemService _shoppingCartItemService;
         private ApiResponse _response;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, IShoppingCartItemService shoppingCartItemService)
         {
             _orderService = orderService;
+            _shoppingCartItemService = shoppingCartItemService;
             _response = new();
         }
 
@@ -30,11 +32,11 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 _response.IsSuccessful = false;
                 _response.Message = ex.Message;
                 _response.statusCode = HttpStatusCode.BadRequest;
             }
+
             return Ok(_response);
         }
 
@@ -44,17 +46,60 @@ namespace API.Controllers
         {
             try
             {
-                await _orderService.AddOrder(orderDto);
+                var sessionId = await StripeService.CreateStripeSession(orderDto.Id, _shoppingCartItemService);
+                var order = await _orderService.AddOrder(orderDto);
+
+                _response.Result = new { sessionId };
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.Created;
             }
             catch (Exception ex)
             {
-
                 _response.IsSuccessful = false;
                 _response.Message = ex.Message;
                 _response.statusCode = HttpStatusCode.BadRequest;
+
+                return BadRequest(_response);
             }
+
+            return Ok(_response);
+        }
+
+        [Authorize(Policy = "AllRol")]
+        [HttpPost("success")]
+        public async Task<IActionResult> Success(int orderId)
+        {
+            try
+            {
+                // TODO: GET ORDER WITH ORDER ID
+                
+                // TODO: get session with session id of order
+                // var session = await StripeService.GetSession(orderId);
+                
+                // if (session.Status == "succeeded")
+                // {
+                //     // TODO: UPDATE ORDER STATUS
+                //     
+                //     return Ok(_response);
+                // }
+                // else
+                // {
+                //     // Mensaje de error
+                // }
+
+                _response.Result = 
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.NoContent;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+
+                return BadRequest(_response);
+            }
+
             return Ok(_response);
         }
 
@@ -70,11 +115,11 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 _response.IsSuccessful = false;
                 _response.Message = ex.Message;
                 _response.statusCode = HttpStatusCode.BadRequest;
             }
+
             return Ok(_response);
         }
 
@@ -90,11 +135,11 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 _response.IsSuccessful = false;
                 _response.Message = ex.Message;
                 _response.statusCode = HttpStatusCode.BadRequest;
             }
+
             return Ok(_response);
         }
     }

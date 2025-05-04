@@ -233,7 +233,6 @@ namespace BLL.Services
 
                 // Aplicar paginación
                 var productos = list
-                    .OrderByDescending(p => p.Price)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();

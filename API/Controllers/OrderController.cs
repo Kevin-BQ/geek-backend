@@ -11,12 +11,14 @@ namespace API.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IShoppingCartItemService _shoppingCartItemService;
+        //private readonly IStripeService _stripeService; 
         private ApiResponse _response;
 
-        public OrderController(IOrderService orderService, IShoppingCartItemService shoppingCartItemService)
+        public OrderController(IOrderService orderService, IShoppingCartItemService shoppingCartItemService)//, IStripeService stripeService)
         {
             _orderService = orderService;
             _shoppingCartItemService = shoppingCartItemService;
+            //_stripeService = stripeService;
             _response = new();
         }
 
@@ -41,15 +43,35 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "AllRol")]
+        [HttpGet("{orderId:int}")]
+        public async Task<IActionResult> GetById(int orderId)
+        {
+            try
+            {
+                _response.Result = await _orderService.GetOrder(orderId);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+
+            return Ok(_response);
+        }
+
+        [Authorize(Policy = "AllRol")]
         [HttpPost]
         public async Task<IActionResult> Create(OrderDto orderDto)
         {
             try
             {
-                var sessionId = await StripeService.CreateStripeSession(orderDto.Id, _shoppingCartItemService);
+                //var sessionId = await _stripeService.CreateStripeSession(orderDto.Id, _shoppingCartItemService);
                 var order = await _orderService.AddOrder(orderDto);
 
-                _response.Result = new { sessionId };
+                //_response.Result = new { sessionId };
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.Created;
             }
@@ -66,16 +88,16 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "AllRol")]
-        [HttpPost("success")]
+        [HttpPost("success/{orderId:int}")]
         public async Task<IActionResult> Success(int orderId)
         {
             try
             {
                 // TODO: GET ORDER WITH ORDER ID
-                
+
                 // TODO: get session with session id of order
                 // var session = await StripeService.GetSession(orderId);
-                
+
                 // if (session.Status == "succeeded")
                 // {
                 //     // TODO: UPDATE ORDER STATUS
@@ -87,9 +109,13 @@ namespace API.Controllers
                 //     // Mensaje de error
                 // }
 
-                _response.Result = 
+
+                var resultMessage = await _orderService.ConfirmPayment(orderId); 
+                _response.Result = resultMessage;
                 _response.IsSuccessful = true;
-                _response.statusCode = HttpStatusCode.NoContent;
+                _response.statusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
@@ -124,7 +150,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "AllRol")]
-        [HttpPost("{id:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

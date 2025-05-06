@@ -36,6 +36,9 @@ namespace Data.Interfaces.IRepositorio
 
         ICommentRepository Comment { get; }
 
+        IShipmentRepository Shipment { get; }
+
+        IShippingAddressRepository ShippingAddress { get; }
 
         Task Save();
     }

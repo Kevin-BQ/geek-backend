@@ -8,7 +8,7 @@ namespace Models.Enum
 {
     public enum OrderStatus
     {
-        Comprado,   
+        Pendiente,   
         Pagado,     
         Cancelado   
     }

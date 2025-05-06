@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Models.Entidades;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,9 @@ namespace Data.Inicializador
              _userManager.CreateAsync(usuario, "Admin123").GetAwaiter().GetResult();
 
             UserAplication userAdmin = _context.UserAplication.Where(u => u.UserName == "administrador").FirstOrDefault();
+
+            _context.ShoppingCarts.Add(new ShoppingCart { UserId = userAdmin.Id });
+            _context.SaveChanges();
 
             _userManager.AddToRoleAsync(userAdmin, "Admin").GetAwaiter().GetResult();
 

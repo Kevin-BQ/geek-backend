@@ -26,6 +26,8 @@ namespace Data.Repositorio
         public IWishlistRepository Wishlist { get; private set; }
         public IReviewsRepository Review { get; private set; }
         public ICommentRepository Comment { get; private set; }
+        public IShipmentRepository Shipment { get; private set; }
+        public IShippingAddressRepository ShippingAddress { get; private set; }
 
         public WorkUnit(ApplicationDbContext context)
         {
@@ -44,6 +46,8 @@ namespace Data.Repositorio
             Wishlist = new WishlistRepository(context);
             Review = new ReviewRepository(context);
             Comment = new CommentRepository(context);
+            Shipment = new ShipmentRepository(context);
+            ShippingAddress = new ShippingAddressRepository(context);
         }
 
         public void Dispose()

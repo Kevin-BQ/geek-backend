@@ -24,6 +24,10 @@ namespace Models.Entities
         public bool Status { get; set; }
         public OrderStatus? OrderStatus { get; set; }
         public decimal? Total { get; set; }
-
+        public string? SessionId { get; set; }
+        public int ShippingAddressId { get; set; }
+        [ForeignKey("ShippingAddressId")]
+        public ShippingAddress ShippingAddress { get; set; }
+        public Shipment? Shipment { get; set; }
     }
 }

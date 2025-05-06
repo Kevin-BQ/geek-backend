@@ -1,22 +1,32 @@
+using BLL.Services;
 using BLL.Services.Interfaces;
+using Models.Entities;
 using Stripe.Checkout;
 
 namespace API;
 
-public class StripeService
+public class StripeService : IStripeService
 {
-    public static async Task<string> CreateStripeSession(int orderId, IShoppingCartItemService shoppingCartItemService)
+    private readonly IOrderItemService _orderItemService; 
+
+    public StripeService(IOrderItemService orderItemService)
     {
-        var items = await shoppingCartItemService.GetAllShoppingItemCarts();
-        
+        _orderItemService = orderItemService;
+    }
+
+    public async Task<string> CreateStripeSession(int orderId)
+    {
+        var items = await _orderItemService.GetAllOrderItemsUser(orderId);
+
         if (items == null || !items.Any())
         {
-            throw new TaskCanceledException("No se encontraron items");
+            throw new InvalidOperationException("No se encontraron items en la orden");
         }
-        
+
+
         // TODO: CAMBIAR A VARIABLES DE ENTORNO QUE ALMACENE LA URL DEL FRONTEND
         var frontendUrl = "http://localhost:4200";
-        
+
         try
         {
             var options = new SessionCreateOptions()
@@ -31,9 +41,9 @@ public class StripeService
                         {
                             Name = item.Product.NameProduct,
                             Description = item.Product.Description,
-                            Images = item.Product.Images.Select(i => i.UrlImage).ToList() ?? []
+                            Images = item.Product.Images.Select(i => i.UrlImage).ToList() ?? new List<string>()
                         },
-                        UnitAmount = (long)(((1 - item.Product.Discount) * item.Price) * 100) // Convert to cents
+                        UnitAmount = (long)(((1 - item.Product.Discount) * item.ListPrice) * 100) // Convert to cents
                     },
                     Quantity = item.Quantity,
                 }).ToList(),
@@ -52,14 +62,14 @@ public class StripeService
             throw;
         }
     }
-    
-    public static async Task<Session> GetSession(string sessionId)
+
+    public async Task<Session> GetSession(string sessionId)
     {
         try
         {
             var service = new SessionService();
             var session = await service.GetAsync(sessionId);
-            
+
             if (session == null)
             {
                 throw new TaskCanceledException("Session no encontrada");

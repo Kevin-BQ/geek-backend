@@ -24,12 +24,12 @@ builder.Services.AddSingleton(cloudinary);
 
 // SET STRIPE
 StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("SECRET_KEY");
-// var stripe = new StripeSettings()
-// {
-//     PublishableKey = Environment.GetEnvironmentVariable("PUBLISHABLE_KEY"),
-//     SecretKey = Environment.GetEnvironmentVariable("SECRET_KEY")
-// };
-// builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("stripe"));
+//var stripe = new StripeSettings()
+//{
+//    PublishableKey = Environment.GetEnvironmentVariable("PUBLISHABLE_KEY"),
+//    SecretKey = Environment.GetEnvironmentVariable("SECRET_KEY")
+//};
+//builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("stripe"));
 
 builder.Services.AddScoped<IdbInicializador, DbInicializador>();
 

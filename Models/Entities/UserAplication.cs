@@ -15,6 +15,7 @@ namespace Models.Entidades
         public ICollection<RoleUserAplication> UserRole { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Review> Reviews { get; set; }
+        public ICollection<ShippingAddress> ShippingAddresses { get; set; }
 
     }
 }

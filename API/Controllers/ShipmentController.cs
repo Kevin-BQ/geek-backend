@@ -6,24 +6,24 @@ using System.Net;
 
 namespace API.Controllers
 {
-    public class OrderItemController: BaseApiController
+    public class ShipmentController: BaseApiController
     {
-        private readonly IOrderItemService _orderItemService;
+        private readonly IShipmentService _shipmentService;
         private ApiResponse _response;
 
-        public OrderItemController(IOrderItemService orderItemService)
+        public ShipmentController(IShipmentService shipmentService)
         {
-            _orderItemService = orderItemService;
+            _shipmentService = shipmentService;
             _response = new();
         }
 
-        [Authorize(Policy = "AllRol")]
-        [HttpGet("{orderId:int}")]
-        public async Task<IActionResult> Get(int orderId)
+        [Authorize(Policy = "AdminRol")]
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             try
             {
-                _response.Result = await _orderItemService.GetAllOrderItemsUser(orderId);
+                _response.Result = await _shipmentService.GetAllShipments();
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.OK;
             }
@@ -37,13 +37,12 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [Authorize(Policy = "AllRol")]
         [HttpPost]
-        public async Task<IActionResult> Create(OrderItemDto orderItemDto)
+        public async Task<IActionResult> Create(ShipmentDto shipmentDto)
         {
             try
             {
-                await _orderItemService.AddOrderItem(orderItemDto);
+                await _shipmentService.AddShipment(shipmentDto);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.Created;
             }
@@ -57,13 +56,31 @@ namespace API.Controllers
             return Ok(_response);
         }
 
-        [Authorize(Policy = "AdminRol")]
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut]
+        public async Task<IActionResult> Edit(ShipmentDto shipmentDto)
         {
             try
             {
-                await _orderItemService.Remove(id);
+                await _shipmentService.UpdateShipment(shipmentDto);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.NoContent;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
+
+        [HttpPut("Status")]
+        public async Task<IActionResult> UpdateStatus(ShipmentDto shipmentDto)
+        {
+            try
+            {
+                await _shipmentService.UpdateStatus(shipmentDto);
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.NoContent;
             }

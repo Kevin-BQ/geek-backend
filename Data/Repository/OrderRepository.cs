@@ -25,6 +25,7 @@ namespace Data.Repository
             {
                 orderDb.Status = order.Status;
                 orderDb.OrderStatus = order.OrderStatus;
+                orderDb.SessionId = order.SessionId;
                 _context.SaveChanges();
             }
         }

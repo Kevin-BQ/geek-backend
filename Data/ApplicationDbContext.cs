@@ -35,6 +35,8 @@ namespace Data
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Shipment> Shipments { get; set; }
+        public DbSet<ShippingAddress> ShippingAddresses { get; set; }
 
 
 

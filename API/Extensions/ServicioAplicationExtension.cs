@@ -97,6 +97,9 @@ namespace API.Extensions
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IShipmentService, ShipmentService>();
+            services.AddScoped<IShippingAddressService , ShippingAddressService>();
+            services.AddScoped<IStripeService , StripeService>();
 
 
 

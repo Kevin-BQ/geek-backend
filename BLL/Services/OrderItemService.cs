@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using BLL.Services.Interfaces;
 using Data.Interfaces.IRepositorio;
+using Microsoft.AspNetCore.Http;
 using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,11 +17,12 @@ namespace BLL.Services
     {
         private readonly IWorkUnit _workUnit;
         private readonly IMapper _mapper;
-
-        public OrderItemService(IWorkUnit workUnit, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public OrderItemService(IWorkUnit workUnit, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _workUnit = workUnit;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<OrderItemDto> AddOrderItem(OrderItemDto orderItemDto)
@@ -88,6 +91,36 @@ namespace BLL.Services
             }
         }
 
+        public async Task<IEnumerable<OrderItem>> GetAllOrderItemsUser(int orderId)
+        {
+            try
+            {
+                var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null)
+                {
+                    throw new InvalidOperationException("Usuario no autenticado.");
+                }
 
+                int userId = int.Parse(userIdClaim.Value);
+
+                var order = await _workUnit.Order.GetFirst(c => c.UserId == userId && c.Id == orderId);
+
+                if (order == null)
+                {
+                    throw new InvalidOperationException("Orden no encontrada.");
+                }
+
+                var lista = await _workUnit.OrderItem.GetAll(
+                    filtro: e => e.OrderId == order.Id,
+                    incluirPropiedades: "Order,Product.Images,Product.Brand,Product.Category,Product.Subcategory");
+
+                return lista.ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -257,7 +257,7 @@ namespace BLL.Services
             try
             {
                 var productDb = await _workUnit.Product.GetFirst(e => e.Id == id,
-                                                        incluirPropiedades: "Brand,Category,Subcategory,Images,Reviews,Comments,Comments.CommentsChild");
+                                                        incluirPropiedades: "Brand,Category,Subcategory,Images,Reviews,Comments.User,Comments.CommentsChild");
 
                 if (productDb == null)
                 {

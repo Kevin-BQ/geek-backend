@@ -86,7 +86,7 @@ namespace Utils
                     .ForMember(d => d.NameSubCategory, m => m.MapFrom(o => o.Subcategory.NameSubcategory))
                     .ForMember(d => d.Review, m => m.MapFrom(o =>
                         o.Reviews != null && o.Reviews.Any()
-                            ? (decimal?)o.Reviews.Average(r => r.Rating)
+                            ? (decimal?)Math.Round(o.Reviews.Average(r => r.Rating), 1)
                             : null))
                     .ForMember(d => d.Image, m => m.MapFrom(o =>
                         o.Images != null && o.Images.Any()
@@ -100,7 +100,7 @@ namespace Utils
                     .ForMember(d => d.NameSubCategory, m => m.MapFrom(o => o.Subcategory.NameSubcategory))
                     .ForMember(d => d.Review, m => m.MapFrom(o =>
                         o.Reviews != null && o.Reviews.Any()
-                            ? (decimal?)o.Reviews.Average(r => r.Rating)
+                            ? (decimal?)Math.Round(o.Reviews.Average(r => r.Rating), 1)
                             : null))
                     .ForMember(d => d.Images, m => m.MapFrom(o =>
                         o.Images != null && o.Images.Any()

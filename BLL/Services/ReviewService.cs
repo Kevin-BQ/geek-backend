@@ -159,5 +159,25 @@ namespace BLL.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<ReviewDto>> GetReviewsByProduct(int productId)
+        {
+            try
+            {
+                var lista = await _workUnit.Review.GetAll(e => e.ProductId == productId,
+                                    incluirPropiedades: "User,Product.Images,Product.Brand,Product.Category,Product.Subcategory");
+
+                if (lista == null)
+                {
+                    throw new TaskCanceledException("El producto aún no tiene reseñas");
+                }
+
+                return _mapper.Map<IEnumerable<ReviewDto>>(lista.ToList());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

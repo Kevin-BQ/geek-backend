@@ -13,5 +13,6 @@ namespace BLL.Services.Interfaces
         Task<ReviewDto> AddReview(ReviewDto reviewDto);
         Task UpdateReview(ReviewDto reviewDto);
         Task DeleteReview(int id);
+        Task<IEnumerable<ReviewDto>> GetReviewsByProduct(int productId);
     }
 }

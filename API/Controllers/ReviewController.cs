@@ -39,6 +39,26 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "AllRol")]
+        [HttpGet("{productId:int}")]
+        public async Task<IActionResult> GetReviewsByProduct(int productId)
+        {
+            try
+            {
+                _response.Result = await _reviewService.GetReviewsByProduct(productId);
+                _response.IsSuccessful = true;
+                _response.statusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+                _response.statusCode = HttpStatusCode.BadRequest;
+            }
+            return Ok(_response);
+        }
+
+        [Authorize(Policy = "AllRol")]
         [HttpPost]
         public async Task<IActionResult> Create(ReviewDto reviewDto)
         {

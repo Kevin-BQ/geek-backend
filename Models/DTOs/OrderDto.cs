@@ -23,5 +23,6 @@ namespace Models.DTOs
         public string? City { get; set; }
         public string? ShippingMethod { get; set; }
         public DateTime ShippingDate { get; set; }
+        public string? SessionId { get; set; }
     }
 }

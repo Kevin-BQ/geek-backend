@@ -71,7 +71,7 @@ namespace API.Controllers
                 //var sessionId = await _stripeService.CreateStripeSession(orderDto.Id, _shoppingCartItemService);
                 var order = await _orderService.AddOrder(orderDto);
 
-                //_response.Result = new { sessionId };
+                _response.Result = order;
                 _response.IsSuccessful = true;
                 _response.statusCode = HttpStatusCode.Created;
             }

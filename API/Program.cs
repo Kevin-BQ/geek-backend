@@ -1,13 +1,42 @@
+using API.Extensions;
+using API.Middleware;
+using CloudinaryDotNet;
+using Data.Inicializador;
+using dotenv.net;
+using Stripe;
+using Utils;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AgregarServiciosAplicacion(builder.Configuration);
+builder.Services.AgregarServiciosIdentidad(builder.Configuration);
+
+// Set your Cloudinary credentials
+//=================================
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+cloudinary.Api.Secure = true;
+
+builder.Services.AddSingleton(cloudinary);
+
+// SET STRIPE
+StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("SECRET_KEY");
+//var stripe = new StripeSettings()
+//{
+//    PublishableKey = Environment.GetEnvironmentVariable("PUBLISHABLE_KEY"),
+//    SecretKey = Environment.GetEnvironmentVariable("SECRET_KEY")
+//};
+//builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("stripe"));
+
+builder.Services.AddScoped<IdbInicializador, DbInicializador>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddlware>();
+app.UseStatusCodePagesWithReExecute("/errores/{0}");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -16,7 +45,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(x => x.AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var inicializador = services.GetRequiredService<IdbInicializador>();
+        inicializador.Inicializar();
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "Un Error ocurrio al ejecutar la Migracion");
+    }
+}
 
 app.MapControllers();
 
